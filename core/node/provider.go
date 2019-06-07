@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/ipfs/go-ipfs-provider"
+	q "github.com/ipfs/go-ipfs-provider/queue"
+	"github.com/ipfs/go-ipfs-provider/simple"
 	"github.com/ipfs/go-ipfs/core/node/helpers"
-	"github.com/ipfs/go-ipfs/provider"
-	q "github.com/ipfs/go-ipfs/provider/queue"
-	"github.com/ipfs/go-ipfs/provider/simple"
 	"github.com/ipfs/go-ipfs/repo"
 	"github.com/libp2p/go-libp2p-core/routing"
 	"go.uber.org/fx"

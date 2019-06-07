@@ -14,6 +14,7 @@ import (
 	"io"
 
 	version "github.com/ipfs/go-ipfs"
+	"github.com/ipfs/go-ipfs-provider"
 	"github.com/ipfs/go-ipfs/core/bootstrap"
 	"github.com/ipfs/go-ipfs/core/node"
 	"github.com/ipfs/go-ipfs/core/node/libp2p"
@@ -23,7 +24,6 @@ import (
 	ipnsrp "github.com/ipfs/go-ipfs/namesys/republisher"
 	"github.com/ipfs/go-ipfs/p2p"
 	"github.com/ipfs/go-ipfs/pin"
-	"github.com/ipfs/go-ipfs/provider"
 	"github.com/ipfs/go-ipfs/repo"
 
 	bserv "github.com/ipfs/go-blockservice"
