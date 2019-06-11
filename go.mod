@@ -39,7 +39,7 @@ require (
 	github.com/ipfs/go-ipfs-exchange-offline v0.0.1
 	github.com/ipfs/go-ipfs-files v0.0.3
 	github.com/ipfs/go-ipfs-posinfo v0.0.1
-	github.com/ipfs/go-ipfs-provider v0.0.0-20190610184752-d7bb85e89013
+	github.com/ipfs/go-ipfs-provider v0.0.0-20190611215647-a0eafde0e4a1
 	github.com/ipfs/go-ipfs-routing v0.1.0
 	github.com/ipfs/go-ipfs-util v0.0.1
 	github.com/ipfs/go-ipld-cbor v0.0.2
