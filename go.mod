@@ -62,13 +62,13 @@ require (
 	github.com/jbenet/go-random-files v0.0.0-20190219210431-31b3f20ebded
 	github.com/jbenet/go-temp-err-catcher v0.0.0-20150120210811-aac704a3f4f2
 	github.com/jbenet/goprocess v0.1.3
-	github.com/libp2p/go-libp2p v0.1.1
+	github.com/libp2p/go-libp2p v0.1.3-0.20190626170235-f299d252e778
 	github.com/libp2p/go-libp2p-autonat-svc v0.1.0
 	github.com/libp2p/go-libp2p-circuit v0.1.0
 	github.com/libp2p/go-libp2p-connmgr v0.1.0
-	github.com/libp2p/go-libp2p-core v0.0.4
+	github.com/libp2p/go-libp2p-core v0.0.7-0.20190626134135-aca080dccfc2
 	github.com/libp2p/go-libp2p-http v0.1.2
-	github.com/libp2p/go-libp2p-kad-dht v0.1.1
+	github.com/libp2p/go-libp2p-kad-dht v0.1.2-0.20190626232611-138991d438ce
 	github.com/libp2p/go-libp2p-kbucket v0.2.0
 	github.com/libp2p/go-libp2p-loggables v0.1.0
 	github.com/libp2p/go-libp2p-mplex v0.2.1
@@ -110,10 +110,9 @@ require (
 	go.uber.org/multierr v1.1.0 // indirect
 	go4.org v0.0.0-20190313082347-94abd6928b1d // indirect
 	golang.org/x/sys v0.0.0-20190610200419-93c9922d18ae
+	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/cheggaaa/pb.v1 v1.0.28
 	gotest.tools/gotestsum v0.3.4
 )
-
-replace github.com/libp2p/go-libp2p-core => github.com/libp2p/go-libp2p-core v0.0.3
 
 go 1.12
