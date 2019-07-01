@@ -10,8 +10,8 @@ import (
 	cmdenv "github.com/ipfs/go-ipfs/core/commands/cmdenv"
 
 	cmds "github.com/ipfs/go-ipfs-cmds"
-	options "github.com/ipfs/interface-go-ipfs-core/options"
-	path "github.com/ipfs/interface-go-ipfs-core/path"
+	options "github.com/ipweb-group/interface-go-ipws-core/options"
+	path "github.com/ipweb-group/interface-go-ipws-core/path"
 	mh "github.com/multiformats/go-multihash"
 )
 

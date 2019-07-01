@@ -11,10 +11,10 @@ import (
 	loader "github.com/ipfs/go-ipfs/plugin/loader"
 
 	"github.com/ipfs/go-ipfs-cmds"
-	config "github.com/ipfs/go-ipfs-config"
+	config "github.com/ipweb-group/go-ipws-config"
 	logging "github.com/ipfs/go-log"
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
-	options "github.com/ipfs/interface-go-ipfs-core/options"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
+	options "github.com/ipweb-group/interface-go-ipws-core/options"
 )
 
 var log = logging.Logger("command")

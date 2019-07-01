@@ -20,7 +20,7 @@ import (
 	cid "github.com/ipfs/go-cid"
 	bstore "github.com/ipfs/go-ipfs-blockstore"
 	cmds "github.com/ipfs/go-ipfs-cmds"
-	config "github.com/ipfs/go-ipfs-config"
+	config "github.com/ipweb-group/go-ipws-config"
 )
 
 type RepoVersion struct {

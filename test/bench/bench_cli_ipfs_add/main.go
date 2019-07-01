@@ -12,7 +12,7 @@ import (
 
 	"github.com/ipfs/go-ipfs/thirdparty/unit"
 
-	config "github.com/ipfs/go-ipfs-config"
+	config "github.com/ipweb-group/go-ipws-config"
 	random "github.com/jbenet/go-random"
 )
 

@@ -351,9 +351,9 @@ go versions during builds.
 - github.com/ipfs/go-ipfs-cmds (v0.0.5 -> v0.0.7):
   - merge in go-ipfs-cmdkit ([ipfs/go-ipfs-cmds#164](https://github.com/ipfs/go-ipfs-cmds/pull/164))
   - fix: return the correct error ([ipfs/go-ipfs-cmds#162](https://github.com/ipfs/go-ipfs-cmds/pull/162))
-- github.com/ipfs/go-ipfs-config (v0.0.1 -> v0.0.3):
-  - Closes: #6284 Add appropriate IPv6 ranges to defaultServerFilters ([ipfs/go-ipfs-config#34](https://github.com/ipfs/go-ipfs-config/pull/34))
-  - add an experiment to prefer TLS 1.3 over secio ([ipfs/go-ipfs-config#32](https://github.com/ipfs/go-ipfs-config/pull/32))
+- github.com/ipweb-group/go-ipws-config (v0.0.1 -> v0.0.3):
+  - Closes: #6284 Add appropriate IPv6 ranges to defaultServerFilters ([ipweb-group/go-ipws-config#34](https://github.com/ipweb-group/go-ipws-config/pull/34))
+  - add an experiment to prefer TLS 1.3 over secio ([ipweb-group/go-ipws-config#32](https://github.com/ipweb-group/go-ipws-config/pull/32))
 - github.com/ipfs/go-ipfs-files (v0.0.2 -> v0.0.3):
   - webfile: make Size() work before Read ([ipfs/go-ipfs-files#18](https://github.com/ipfs/go-ipfs-files/pull/18))
   - check http status code during WebFile reads and return error for non-2XX ([ipfs/go-ipfs-files#17](https://github.com/ipfs/go-ipfs-files/pull/17))
@@ -368,11 +368,11 @@ go versions during builds.
   - include the path in path errors ([ipfs/go-path#28](https://github.com/ipfs/go-path/pull/28))
 - github.com/ipfs/go-unixfs (v0.0.4 -> v0.0.6):
   - chore: remove URL field ([ipfs/go-unixfs#72](https://github.com/ipfs/go-unixfs/pull/72))
-- github.com/ipfs/interface-go-ipfs-core (v0.0.6 -> v0.0.8):
-  - switch to base32 cidv1 by default ([ipfs/interface-go-ipfs-core#29](https://github.com/ipfs/interface-go-ipfs-core/pull/29))
-  - path: drop error from ParsePath ([ipfs/interface-go-ipfs-core#22](https://github.com/ipfs/interface-go-ipfs-core/pull/22))
-  - tests: fix a bunch of small test lints/issues ([ipfs/interface-go-ipfs-core#28](https://github.com/ipfs/interface-go-ipfs-core/pull/28))
-  - Update Pin.RmRecursive docs to clarify shared indirect pins are not removed ([ipfs/interface-go-ipfs-core#26](https://github.com/ipfs/interface-go-ipfs-core/pull/26))
+- github.com/ipweb-group/interface-go-ipws-core (v0.0.6 -> v0.0.8):
+  - switch to base32 cidv1 by default ([ipweb-group/interface-go-ipws-core#29](https://github.com/ipweb-group/interface-go-ipws-core/pull/29))
+  - path: drop error from ParsePath ([ipweb-group/interface-go-ipws-core#22](https://github.com/ipweb-group/interface-go-ipws-core/pull/22))
+  - tests: fix a bunch of small test lints/issues ([ipweb-group/interface-go-ipws-core#28](https://github.com/ipweb-group/interface-go-ipws-core/pull/28))
+  - Update Pin.RmRecursive docs to clarify shared indirect pins are not removed ([ipweb-group/interface-go-ipws-core#26](https://github.com/ipweb-group/interface-go-ipws-core/pull/26))
 - github.com/libp2p/go-buffer-pool (v0.0.1 -> v0.0.2):
   - feat: add buffered writer ([libp2p/go-buffer-pool#9](https://github.com/libp2p/go-buffer-pool/pull/9))
 - github.com/libp2p/go-conn-security-multistream (v0.0.1 -> v0.0.2):
@@ -847,12 +847,12 @@ earlier on start.
 - github.com/ipfs/go-mfs:
   - Return node from FlushPath ([ipfs/go-mfs#72](https://github.com/ipfs/go-mfs/pull/72))
   - Wire up context to FlushPath ([ipfs/go-mfs#70](https://github.com/ipfs/go-mfs/pull/70))
-- github.com/ipfs/interface-go-ipfs-core:
-  - don't close the top-level addr ([ipfs/interface-go-ipfs-core#25](https://github.com/ipfs/interface-go-ipfs-core/pull/25))
-  - fix a bunch of small test "bugs" ([ipfs/interface-go-ipfs-core#24](https://github.com/ipfs/interface-go-ipfs-core/pull/24))
-  - remove Wrap ([ipfs/interface-go-ipfs-core#21](https://github.com/ipfs/interface-go-ipfs-core/pull/21))
-  - Unixfs.Wrap Fixes ([ipfs/interface-go-ipfs-core#10](https://github.com/ipfs/interface-go-ipfs-core/pull/10))
-  - tweak the Ls interface ([ipfs/interface-go-ipfs-core#14](https://github.com/ipfs/interface-go-ipfs-core/pull/14))
+- github.com/ipweb-group/interface-go-ipws-core:
+  - don't close the top-level addr ([ipweb-group/interface-go-ipws-core#25](https://github.com/ipweb-group/interface-go-ipws-core/pull/25))
+  - fix a bunch of small test "bugs" ([ipweb-group/interface-go-ipws-core#24](https://github.com/ipweb-group/interface-go-ipws-core/pull/24))
+  - remove Wrap ([ipweb-group/interface-go-ipws-core#21](https://github.com/ipweb-group/interface-go-ipws-core/pull/21))
+  - Unixfs.Wrap Fixes ([ipweb-group/interface-go-ipws-core#10](https://github.com/ipweb-group/interface-go-ipws-core/pull/10))
+  - tweak the Ls interface ([ipweb-group/interface-go-ipws-core#14](https://github.com/ipweb-group/interface-go-ipws-core/pull/14))
 - github.com/libp2p/go-buffer-pool:
   - Enable tests ([libp2p/go-buffer-pool#6](https://github.com/libp2p/go-buffer-pool/pull/6))
 - github.com/libp2p/go-flow-metrics:
@@ -1192,7 +1192,7 @@ designed to allow go-ipfs be used as a daemon or a library interchangeably.
 
 As of this release, go-ipfs now has:
 
-* External interface definitions in [ipfs/interface-go-ipfs-core][].
+* External interface definitions in [ipweb-group/interface-go-ipws-core][].
 * A work-in-progress implementation ([ipfs/go-ipfs-http-client][]) of these
   interfaces that uses the IPFS HTTP API. This will replace the
   ([ipfs/go-ipfs-api][]) library.
@@ -1212,7 +1212,7 @@ The next steps are:
    go-ipfs as a library.
 
 [ipfs/go-ipfs#4498]: https://github.com/ipfs/go-ipfs/issues/4498
-[ipfs/interface-go-ipfs-core]: https://github.com/ipfs/interface-go-ipfs-core
+[ipweb-group/interface-go-ipws-core]: https://github.com/ipweb-group/interface-go-ipws-core
 [ipfs/go-ipfs-http-client]: https://github.com/ipfs/go-ipfs-http-client
 [ipfs/go-ipfs-api]: https://github.com/ipfs/go-ipfs-http-client
 [daemon-plugin]: https://github.com/ipfs/go-ipfs/blob/master/docs/plugins.md#daemon
@@ -1413,13 +1413,13 @@ The next steps are:
   - Add link traversal option ([ipfs/go-ipfs-cmds#96](https://github.com/ipfs/go-ipfs-cmds/pull/96))
   - Don't skip stdin test on Windows ([ipfs/go-ipfs-cmds#136](https://github.com/ipfs/go-ipfs-cmds/pull/136))
   - MakeTypedEncoder: accept results by pointer or value ([ipfs/go-ipfs-cmds#134](https://github.com/ipfs/go-ipfs-cmds/pull/134))
-- github.com/ipfs/go-ipfs-config:
-  - Gateway.NoFetch ([ipfs/go-ipfs-config#19](https://github.com/ipfs/go-ipfs-config/pull/19))
-  - add a Clone function ([ipfs/go-ipfs-config#16](https://github.com/ipfs/go-ipfs-config/pull/16))
-  - randomports: give user ability to init ipfs using random port for swarm. ([ipfs/go-ipfs-config#17](https://github.com/ipfs/go-ipfs-config/pull/17))
-  - Allow the use of the User-Agent header ([ipfs/go-ipfs-config#15](https://github.com/ipfs/go-ipfs-config/pull/15))
-  - autorelay options ([ipfs/go-ipfs-config#21](https://github.com/ipfs/go-ipfs-config/pull/21))
-  - profile: add badger truncate option ([ipfs/go-ipfs-config#20](https://github.com/ipfs/go-ipfs-config/pull/20))
+- github.com/ipweb-group/go-ipws-config:
+  - Gateway.NoFetch ([ipweb-group/go-ipws-config#19](https://github.com/ipweb-group/go-ipws-config/pull/19))
+  - add a Clone function ([ipweb-group/go-ipws-config#16](https://github.com/ipweb-group/go-ipws-config/pull/16))
+  - randomports: give user ability to init ipfs using random port for swarm. ([ipweb-group/go-ipws-config#17](https://github.com/ipweb-group/go-ipws-config/pull/17))
+  - Allow the use of the User-Agent header ([ipweb-group/go-ipws-config#15](https://github.com/ipweb-group/go-ipws-config/pull/15))
+  - autorelay options ([ipweb-group/go-ipws-config#21](https://github.com/ipweb-group/go-ipws-config/pull/21))
+  - profile: add badger truncate option ([ipweb-group/go-ipws-config#20](https://github.com/ipweb-group/go-ipws-config/pull/20))
 - github.com/ipfs/go-ipfs-delay:
   - Feat/refactor wait time ([ipfs/go-ipfs-delay#1](https://github.com/ipfs/go-ipfs-delay/pull/1))
 - github.com/ipfs/go-ipfs-files:
@@ -2165,14 +2165,14 @@ github.com/ipfs/go-blockservice
 github.com/ipfs/go-cidutil
   - add a utility method for sorting CID slices ([ipfs/go-cidutil#5](https://github.com/ipfs/go-cidutil/pull/5))
 
-github.com/ipfs/go-ipfs-config
-  - Add pubsub configuration options ([ipfs/go-ipfs-config#3](https://github.com/ipfs/go-ipfs-config/pull/3))
-  - add QUIC experiment ([ipfs/go-ipfs-config#4](https://github.com/ipfs/go-ipfs-config/pull/4))
-  - Add Gateway.APICommands for /api allowlists ([ipfs/go-ipfs-config#10](https://github.com/ipfs/go-ipfs-config/pull/10))
-  - allow multiple API/Gateway addresses ([ipfs/go-ipfs-config#11](https://github.com/ipfs/go-ipfs-config/pull/11))
-  - Fix handling of null strings ([ipfs/go-ipfs-config#12](https://github.com/ipfs/go-ipfs-config/pull/12))
-  - add experiment for p2p http proxy ([ipfs/go-ipfs-config#13](https://github.com/ipfs/go-ipfs-config/pull/13))
-  - add message signing config options ([ipfs/go-ipfs-config#18](https://github.com/ipfs/go-ipfs-config/pull/18))
+github.com/ipweb-group/go-ipws-config
+  - Add pubsub configuration options ([ipweb-group/go-ipws-config#3](https://github.com/ipweb-group/go-ipws-config/pull/3))
+  - add QUIC experiment ([ipweb-group/go-ipws-config#4](https://github.com/ipweb-group/go-ipws-config/pull/4))
+  - Add Gateway.APICommands for /api allowlists ([ipweb-group/go-ipws-config#10](https://github.com/ipweb-group/go-ipws-config/pull/10))
+  - allow multiple API/Gateway addresses ([ipweb-group/go-ipws-config#11](https://github.com/ipweb-group/go-ipws-config/pull/11))
+  - Fix handling of null strings ([ipweb-group/go-ipws-config#12](https://github.com/ipweb-group/go-ipws-config/pull/12))
+  - add experiment for p2p http proxy ([ipweb-group/go-ipws-config#13](https://github.com/ipweb-group/go-ipws-config/pull/13))
+  - add message signing config options ([ipweb-group/go-ipws-config#18](https://github.com/ipweb-group/go-ipws-config/pull/18))
 
 github.com/ipfs/go-merkledag
   - Add FetchGraphWithDepthLimit to specify depth-limited graph fetching. ([ipfs/go-merkledag#2](https://github.com/ipfs/go-merkledag/pull/2))

@@ -15,7 +15,7 @@ import (
 	files "github.com/ipfs/go-ipfs-files"
 	ipld "github.com/ipfs/go-ipld-format"
 	ipfspath "github.com/ipfs/go-path"
-	path "github.com/ipfs/interface-go-ipfs-core/path"
+	path "github.com/ipweb-group/interface-go-ipws-core/path"
 	mh "github.com/multiformats/go-multihash"
 )
 

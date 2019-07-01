@@ -19,9 +19,9 @@ import (
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	dag "github.com/ipfs/go-merkledag"
 	verifcid "github.com/ipfs/go-verifcid"
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
-	options "github.com/ipfs/interface-go-ipfs-core/options"
-	"github.com/ipfs/interface-go-ipfs-core/path"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
+	options "github.com/ipweb-group/interface-go-ipws-core/options"
+	"github.com/ipweb-group/interface-go-ipws-core/path"
 )
 
 var PinCmd = &cmds.Command{

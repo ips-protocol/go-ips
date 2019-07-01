@@ -25,7 +25,7 @@ require (
 	github.com/ipfs/go-cidutil v0.0.2
 	github.com/ipfs/go-datastore v0.0.5
 	github.com/ipfs/go-detect-race v0.0.1
-	github.com/ipfs/go-ds-badger v0.0.3
+	github.com/ipfs/go-ds-badger v0.0.4
 	github.com/ipfs/go-ds-flatfs v0.0.2
 	github.com/ipfs/go-ds-leveldb v0.0.2
 	github.com/ipfs/go-ds-measure v0.0.1
@@ -35,7 +35,6 @@ require (
 	github.com/ipfs/go-ipfs-blocksutil v0.0.1
 	github.com/ipfs/go-ipfs-chunker v0.0.1
 	github.com/ipfs/go-ipfs-cmds v0.0.8
-	github.com/ipfs/go-ipfs-config v0.0.3
 	github.com/ipfs/go-ipfs-ds-help v0.0.1
 	github.com/ipfs/go-ipfs-exchange-interface v0.0.1
 	github.com/ipfs/go-ipfs-exchange-offline v0.0.1
@@ -56,9 +55,10 @@ require (
 	github.com/ipfs/go-unixfs v0.0.6
 	github.com/ipfs/go-verifcid v0.0.1
 	github.com/ipfs/hang-fds v0.0.1
-	github.com/ipfs/interface-go-ipfs-core v0.0.8
 	github.com/ipfs/iptb v1.4.0
 	github.com/ipfs/iptb-plugins v0.0.2
+	github.com/ipweb-group/go-ipws-config v0.9.0
+	github.com/ipweb-group/interface-go-ipws-core v0.9.0
 	github.com/jbenet/go-is-domain v1.0.2
 	github.com/jbenet/go-random v0.0.0-20190219211222-123a90aedc0c
 	github.com/jbenet/go-random-files v0.0.0-20190219210431-31b3f20ebded
@@ -121,7 +121,8 @@ require (
 	go.uber.org/goleak v0.10.0 // indirect
 	go.uber.org/multierr v1.1.0 // indirect
 	go4.org v0.0.0-20190313082347-94abd6928b1d // indirect
-	golang.org/x/sys v0.0.0-20190522044717-8097e1b27ff5
+	golang.org/x/sys v0.0.0-20190614160838-b47fdc937951
+	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/cheggaaa/pb.v1 v1.0.28
 	gotest.tools/gotestsum v0.3.4
 )

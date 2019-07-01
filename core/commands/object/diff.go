@@ -8,7 +8,7 @@ import (
 	"github.com/ipfs/go-ipfs/dagutils"
 
 	cmds "github.com/ipfs/go-ipfs-cmds"
-	path "github.com/ipfs/interface-go-ipfs-core/path"
+	path "github.com/ipweb-group/interface-go-ipws-core/path"
 )
 
 const (

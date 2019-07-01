@@ -1,7 +1,7 @@
 package plugin
 
 import (
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
 )
 
 // PluginDaemon is an interface for daemon plugins. These plugins will be run on

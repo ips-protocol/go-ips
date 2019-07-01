@@ -7,7 +7,7 @@ import (
 	"time"
 
 	blockstore "github.com/ipfs/go-ipfs-blockstore"
-	"github.com/ipfs/go-ipfs-config"
+	"github.com/ipweb-group/go-ipws-config"
 	util "github.com/ipfs/go-ipfs-util"
 	peer "github.com/libp2p/go-libp2p-peer"
 	"github.com/libp2p/go-libp2p-peerstore/pstoremem"

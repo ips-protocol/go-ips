@@ -30,7 +30,7 @@ import (
 	dag "github.com/ipfs/go-merkledag"
 	importer "github.com/ipfs/go-unixfs/importer"
 	uio "github.com/ipfs/go-unixfs/io"
-	ipath "github.com/ipfs/interface-go-ipfs-core/path"
+	ipath "github.com/ipweb-group/interface-go-ipws-core/path"
 	ci "github.com/libp2p/go-testutil/ci"
 )
 

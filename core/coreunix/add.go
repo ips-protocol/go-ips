@@ -23,8 +23,8 @@ import (
 	"github.com/ipfs/go-unixfs/importer/balanced"
 	ihelper "github.com/ipfs/go-unixfs/importer/helpers"
 	"github.com/ipfs/go-unixfs/importer/trickle"
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
-	"github.com/ipfs/interface-go-ipfs-core/path"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
+	"github.com/ipweb-group/interface-go-ipws-core/path"
 )
 
 var log = logging.Logger("coreunix")

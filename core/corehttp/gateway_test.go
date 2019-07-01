@@ -18,12 +18,12 @@ import (
 
 	datastore "github.com/ipfs/go-datastore"
 	syncds "github.com/ipfs/go-datastore/sync"
-	config "github.com/ipfs/go-ipfs-config"
+	config "github.com/ipweb-group/go-ipws-config"
 	files "github.com/ipfs/go-ipfs-files"
 	path "github.com/ipfs/go-path"
-	iface "github.com/ipfs/interface-go-ipfs-core"
-	nsopts "github.com/ipfs/interface-go-ipfs-core/options/namesys"
-	ipath "github.com/ipfs/interface-go-ipfs-core/path"
+	iface "github.com/ipweb-group/interface-go-ipws-core"
+	nsopts "github.com/ipweb-group/interface-go-ipws-core/options/namesys"
+	ipath "github.com/ipweb-group/interface-go-ipws-core/path"
 	ci "github.com/libp2p/go-libp2p-crypto"
 	id "github.com/libp2p/go-libp2p/p2p/protocol/identify"
 )

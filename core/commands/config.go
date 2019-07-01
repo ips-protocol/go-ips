@@ -16,7 +16,7 @@ import (
 
 	"github.com/elgris/jsondiff"
 	"github.com/ipfs/go-ipfs-cmds"
-	"github.com/ipfs/go-ipfs-config"
+	"github.com/ipweb-group/go-ipws-config"
 )
 
 // ConfigUpdateOutput is config profile apply command's output

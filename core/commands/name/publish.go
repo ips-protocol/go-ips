@@ -9,9 +9,9 @@ import (
 	cmdenv "github.com/ipfs/go-ipfs/core/commands/cmdenv"
 
 	cmds "github.com/ipfs/go-ipfs-cmds"
-	iface "github.com/ipfs/interface-go-ipfs-core"
-	options "github.com/ipfs/interface-go-ipfs-core/options"
-	path "github.com/ipfs/interface-go-ipfs-core/path"
+	iface "github.com/ipweb-group/interface-go-ipws-core"
+	options "github.com/ipweb-group/interface-go-ipws-core/options"
+	path "github.com/ipweb-group/interface-go-ipws-core/path"
 )
 
 var (

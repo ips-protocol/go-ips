@@ -18,9 +18,9 @@ import (
 	ipld "github.com/ipfs/go-ipld-format"
 	dag "github.com/ipfs/go-merkledag"
 	ft "github.com/ipfs/go-unixfs"
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
-	caopts "github.com/ipfs/interface-go-ipfs-core/options"
-	ipath "github.com/ipfs/interface-go-ipfs-core/path"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
+	caopts "github.com/ipweb-group/interface-go-ipws-core/options"
+	ipath "github.com/ipweb-group/interface-go-ipws-core/path"
 )
 
 const inputLimit = 2 << 20

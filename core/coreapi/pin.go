@@ -8,9 +8,9 @@ import (
 	cid "github.com/ipfs/go-cid"
 	offline "github.com/ipfs/go-ipfs-exchange-offline"
 	merkledag "github.com/ipfs/go-merkledag"
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
-	caopts "github.com/ipfs/interface-go-ipfs-core/options"
-	path "github.com/ipfs/interface-go-ipfs-core/path"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
+	caopts "github.com/ipweb-group/interface-go-ipws-core/options"
+	path "github.com/ipweb-group/interface-go-ipws-core/path"
 )
 
 type PinAPI CoreAPI

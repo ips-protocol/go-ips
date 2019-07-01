@@ -19,9 +19,9 @@ import (
 
 	"github.com/ipfs/go-datastore"
 	syncds "github.com/ipfs/go-datastore/sync"
-	"github.com/ipfs/go-ipfs-config"
-	coreiface "github.com/ipfs/interface-go-ipfs-core"
-	"github.com/ipfs/interface-go-ipfs-core/tests"
+	"github.com/ipweb-group/go-ipws-config"
+	coreiface "github.com/ipweb-group/interface-go-ipws-core"
+	"github.com/ipweb-group/interface-go-ipws-core/tests"
 	ci "github.com/libp2p/go-libp2p-crypto"
 	"github.com/libp2p/go-libp2p-peer"
 	pstore "github.com/libp2p/go-libp2p-peerstore"
