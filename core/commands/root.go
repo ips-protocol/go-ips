@@ -15,7 +15,7 @@ import (
 
 var log = logging.Logger("core/commands")
 
-var ErrNotOnline = errors.New("this command must be run in online mode. Try running 'ipfs daemon' first")
+var ErrNotOnline = errors.New("this command must be run in online mode. Try running 'ipws daemon' first")
 
 const (
 	ConfigOption  = "config"
@@ -28,13 +28,13 @@ const (
 var Root = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline:  "Global p2p merkle-dag filesystem.",
-		Synopsis: "ipfs [--config=<config> | -c] [--debug | -D] [--help] [-h] [--api=<api>] [--offline] [--cid-base=<base>] [--upgrade-cidv0-in-output] [--encoding=<encoding> | --enc] [--timeout=<timeout>] <command> ...",
+		Synopsis: "ipws [--config=<config> | -c] [--debug | -D] [--help] [-h] [--api=<api>] [--offline] [--cid-base=<base>] [--upgrade-cidv0-in-output] [--encoding=<encoding> | --enc] [--timeout=<timeout>] <command> ...",
 		Subcommands: `
 BASIC COMMANDS
-  init          Initialize ipfs local configuration
-  add <path>    Add a file to IPFS
-  cat <ref>     Show IPFS object data
-  get <ref>     Download IPFS objects
+  init          Initialize ipws local configuration
+  add <path>    Add a file to IPWS
+  cat <ref>     Show IPWS object data
+  get <ref>     Download IPWS objects
   ls <ref>      List links from an object
   refs <ref>    List hashes of links from an object
 
@@ -46,19 +46,19 @@ DATA STRUCTURE COMMANDS
 
 ADVANCED COMMANDS
   daemon        Start a long-running daemon process
-  mount         Mount an IPFS read-only mountpoint
+  mount         Mount an IPWS read-only mountpoint
   resolve       Resolve any type of name
   name          Publish and resolve IPNS names
   key           Create and list IPNS name keypairs
   dns           Resolve DNS links
   pin           Pin objects to local storage
-  repo          Manipulate the IPFS repository
+  repo          Manipulate the IPWS repository
   stats         Various operational stats
   p2p           Libp2p stream mounting
   filestore     Manage the filestore (experimental)
 
 NETWORK COMMANDS
-  id            Show info about IPFS peers
+  id            Show info about IPWS peers
   bootstrap     Add or remove bootstrap peers
   swarm         Manage connections to the p2p network
   dht           Query the DHT for values or peers
@@ -67,19 +67,19 @@ NETWORK COMMANDS
 
 TOOL COMMANDS
   config        Manage configuration
-  version       Show ipfs version information
-  update        Download and apply go-ipfs updates
+  version       Show ipws version information
+  update        Download and apply go-ipws updates
   commands      List all available commands
   cid           Convert and discover properties of CIDs
   log           Manage and show logs of running daemon
 
-Use 'ipfs <command> --help' to learn more about each command.
+Use 'ipws <command> --help' to learn more about each command.
 
-ipfs uses a repository in the local file system. By default, the repo is
-located at ~/.ipfs. To change the repo location, set the $IPFS_PATH
+ipws uses a repository in the local file system. By default, the repo is
+located at ~/.ipws. To change the repo location, set the $IPWS_PATH
 environment variable:
 
-  export IPFS_PATH=/path/to/ipfsrepo
+  export IPWS_PATH=/path/to/ipwsrepo
 
 EXIT STATUS
 
@@ -108,7 +108,7 @@ The CLI will exit with one of the following values:
 	},
 }
 
-// commandsDaemonCmd is the "ipfs commands" command for daemon
+// commandsDaemonCmd is the "ipws commands" command for daemon
 var CommandsDaemonCmd = CommandsCmd(Root)
 
 var rootSubcommands = map[string]*cmds.Command{
@@ -156,10 +156,10 @@ var RootRO = &cmds.Command{}
 
 var CommandsDaemonROCmd = CommandsCmd(RootRO)
 
-// RefsROCmd is `ipfs refs` command
+// RefsROCmd is `ipws refs` command
 var RefsROCmd = &cmds.Command{}
 
-// VersionROCmd is `ipfs version` command (without deps).
+// VersionROCmd is `ipws version` command (without deps).
 var VersionROCmd = &cmds.Command{}
 
 var rootROSubcommands = map[string]*cmds.Command{

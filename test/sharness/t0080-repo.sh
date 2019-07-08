@@ -50,8 +50,8 @@ test_expect_success "'ipfs pin rm' output looks good" '
 test_expect_success "ipfs repo gc fully reverse ipfs add (part 1)" '
   ipfs repo gc &&
   random 100000 41 >gcfile &&
-  expected="$(directory_size "$IPFS_PATH/blocks")" &&
-  find "$IPFS_PATH/blocks" -type f &&
+  expected="$(directory_size "$IPWS_PATH/blocks")" &&
+  find "$IPWS_PATH/blocks" -type f &&
   hash=$(ipfs add -q gcfile) &&
   ipfs pin rm -r $hash &&
   ipfs repo gc
@@ -60,7 +60,7 @@ test_expect_success "ipfs repo gc fully reverse ipfs add (part 1)" '
 test_kill_ipfs_daemon
 
 test_expect_success "ipfs repo gc fully reverse ipfs add (part 2)" '
-  actual=$(directory_size "$IPFS_PATH/blocks") &&
+  actual=$(directory_size "$IPWS_PATH/blocks") &&
   { test "$actual" -eq "$expected" || test_fsh echo "$actual != $expected"; } &&
   { test "$actual" -gt "0" || test_fsh echo "not($actual > 0)"; }
 '

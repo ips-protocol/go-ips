@@ -1,17 +1,17 @@
-# IPFS API Implementation Doc
+# IPWS API Implementation Doc
 
 This short document aims to give a quick guide to anyone implementing API
-bindings for IPFS implementations-- in particular go-ipfs.
+bindings for IPWS implementations-- in particular go-ipws.
 
 Sections:
-- IPFS Types
+- IPWS Types
 - API Transports
 - API Commands
 - Implementing bindings for the HTTP API
 
-## IPFS Types
+## IPWS Types
 
-IPFS uses a set of value type that is useful to enumerate up front:
+IPWS uses a set of value type that is useful to enumerate up front:
 
 - `<ipfs-path>` is unix-style path, beginning with `/ipfs/<cid>/...` or
   `/ipns/<hash>/...` or `/ipns/<domain>/...`.

@@ -23,7 +23,7 @@ type BuildCfg struct {
 	// If online is set, the node will have networking enabled
 	Online bool
 
-	// ExtraOpts is a map of extra options used to configure the ipfs nodes creation
+	// ExtraOpts is a map of extra options used to configure the ipws nodes creation
 	ExtraOpts map[string]bool
 
 	// If permanent then node should run more expensive processes

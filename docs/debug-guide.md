@@ -1,6 +1,6 @@
 # General performance debugging guidelines
 
-This is a document for helping debug go-ipfs. Please add to it if you can!
+This is a document for helping debug go-ipws. Please add to it if you can!
 
 ### Table of Contents
 - [Beginning](#beginning)
@@ -11,22 +11,22 @@ This is a document for helping debug go-ipfs. Please add to it if you can!
 
 ### Beginning
 
-When you see ipfs doing something (using lots of CPU, memory, or otherwise
+When you see ipws doing something (using lots of CPU, memory, or otherwise
 being weird), the first thing you want to do is gather all the relevant
 profiling information.
 
 - goroutine dump
-  - `curl localhost:5001/debug/pprof/goroutine\?debug=2 > ipfs.stacks`
+  - `curl localhost:5001/debug/pprof/goroutine\?debug=2 > ipws.stacks`
 - 30 second cpu profile
-  - `curl localhost:5001/debug/pprof/profile > ipfs.cpuprof`
+  - `curl localhost:5001/debug/pprof/profile > ipws.cpuprof`
 - heap trace dump
-  - `curl localhost:5001/debug/pprof/heap > ipfs.heap`
+  - `curl localhost:5001/debug/pprof/heap > ipws.heap`
 - memory statistics (in json, see "memstats" object)
-  - `curl localhost:5001/debug/vars > ipfs.vars`
+  - `curl localhost:5001/debug/vars > ipws.vars`
 - system information
-  - `ipfs diag sys > ipfs.sysinfo`
+  - `ipws diag sys > ipws.sysinfo`
 
-Bundle all that up and include a copy of the ipfs binary that you are running
+Bundle all that up and include a copy of the ipws binary that you are running
 (having the exact same binary is important, it contains debug info).
 
 You can investigate yourself if you feel intrepid:
@@ -93,7 +93,7 @@ The output is JSON formatted and includes badger store statistics, the command l
 
 ### Other
 
-If you have any questions, or want us to analyze some weird go-ipfs behaviour,
+If you have any questions, or want us to analyze some weird go-ipws behaviour,
 just let us know, and be sure to include all the profiling information
 mentioned at the top.
 

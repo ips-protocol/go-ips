@@ -1,5 +1,5 @@
 FROM golang:1.12-stretch
-MAINTAINER Lars Gierth <lgierth@ipfs.io>
+MAINTAINER IPWeb <contact@ipweb.io>
 
 ENV SRC_DIR /go-ipfs
 
@@ -38,12 +38,12 @@ RUN apt-get update && apt-get install -y fuse
 
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1-glibc
-MAINTAINER Lars Gierth <lgierth@ipfs.io>
+MAINTAINER IPWeb <contact@ipweb.io>
 
-# Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
+# Get the ipws binary, entrypoint script, and TLS CAs from the build container.
 ENV SRC_DIR /go-ipfs
-COPY --from=0 $SRC_DIR/cmd/ipfs/ipfs /usr/local/bin/ipfs
-COPY --from=0 $SRC_DIR/bin/container_daemon /usr/local/bin/start_ipfs
+COPY --from=0 $SRC_DIR/cmd/ipws/ipws /usr/local/bin/ipws
+COPY --from=0 $SRC_DIR/bin/container_daemon /usr/local/bin/start_ipws
 COPY --from=0 /tmp/su-exec/su-exec /sbin/su-exec
 COPY --from=0 /tmp/tini /sbin/tini
 COPY --from=0 /bin/fusermount /usr/local/bin/fusermount
@@ -65,27 +65,27 @@ EXPOSE 8080
 EXPOSE 8081
 
 # Create the fs-repo directory and switch to a non-privileged user.
-ENV IPFS_PATH /data/ipfs
-RUN mkdir -p $IPFS_PATH \
-  && adduser -D -h $IPFS_PATH -u 1000 -G users ipfs \
-  && chown ipfs:users $IPFS_PATH
+ENV IPWS_PATH /data/ipws
+RUN mkdir -p $IPWS_PATH \
+  && adduser -D -h $IPWS_PATH -u 1000 -G users ipws \
+  && chown ipws:users $IPWS_PATH
 
-# Create mount points for `ipfs mount` command
-RUN mkdir /ipfs /ipns \
-  && chown ipfs:users /ipfs /ipns
+# Create mount points for `ipws mount` command
+RUN mkdir /ipws /ipns \
+  && chown ipws:users /ipws /ipns
 
 # Expose the fs-repo as a volume.
-# start_ipfs initializes an fs-repo if none is mounted.
+# start_ipws initializes an fs-repo if none is mounted.
 # Important this happens after the USER directive so permission are correct.
-VOLUME $IPFS_PATH
+VOLUME $IPWS_PATH
 
 # The default logging level
-ENV IPFS_LOGGING ""
+ENV IPWS_LOGGING ""
 
 # This just makes sure that:
 # 1. There's an fs-repo, and initializes one if there isn't.
 # 2. The API and Gateway are accessible from outside the container.
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start_ipfs"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start_ipws"]
 
 # Execute the daemon subcommand by default
 CMD ["daemon", "--migrate=true"]

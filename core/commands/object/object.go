@@ -48,9 +48,9 @@ const (
 
 var ObjectCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Interact with IPFS objects.",
+		Tagline: "Interact with IPWS objects.",
 		ShortDescription: `
-'ipfs object' is a plumbing command used to manipulate DAG objects
+'ipws object' is a plumbing command used to manipulate DAG objects
 directly.`,
 	},
 
@@ -69,13 +69,13 @@ directly.`,
 // ObjectDataCmd object data command
 var ObjectDataCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Output the raw bytes of an IPFS object.",
+		Tagline: "Output the raw bytes of an IPWS object.",
 		ShortDescription: `
-'ipfs object data' is a plumbing command for retrieving the raw bytes stored
+'ipws object data' is a plumbing command for retrieving the raw bytes stored
 in a DAG node. It outputs to stdout, and <key> is a base58 encoded multihash.
 `,
 		LongDescription: `
-'ipfs object data' is a plumbing command for retrieving the raw bytes stored
+'ipws object data' is a plumbing command for retrieving the raw bytes stored
 in a DAG node. It outputs to stdout, and <key> is a base58 encoded multihash.
 
 Note that the "--encoding" option does not affect the output, since the output
@@ -108,7 +108,7 @@ var ObjectLinksCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Output the links pointed to by the specified object.",
 		ShortDescription: `
-'ipfs object links' is a plumbing command for retrieving the links from
+'ipws object links' is a plumbing command for retrieving the links from
 a DAG node. It outputs to stdout, and <key> is a base58 encoded
 multihash.
 `,
@@ -182,12 +182,12 @@ var ObjectGetCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Get and serialize the DAG node named by <key>.",
 		ShortDescription: `
-'ipfs object get' is a plumbing command for retrieving DAG nodes.
+'ipws object get' is a plumbing command for retrieving DAG nodes.
 It serializes the DAG node to the format specified by the "--encoding"
 flag. It outputs to stdout, and <key> is a base58 encoded multihash.
 `,
 		LongDescription: `
-'ipfs object get' is a plumbing command for retrieving DAG nodes.
+'ipws object get' is a plumbing command for retrieving DAG nodes.
 It serializes the DAG node to the format specified by the "--encoding"
 flag. It outputs to stdout, and <key> is a base58 encoded multihash.
 
@@ -289,7 +289,7 @@ var ObjectStatCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Get stats for the DAG node named by <key>.",
 		ShortDescription: `
-'ipfs object stat' is a plumbing command to print DAG node statistics.
+'ipws object stat' is a plumbing command to print DAG node statistics.
 <key> is a base58 encoded multihash. It outputs to stdout:
 
 	NumLinks        int number of links in link table
@@ -362,11 +362,11 @@ var ObjectPutCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Store input as a DAG object, print its key.",
 		ShortDescription: `
-'ipfs object put' is a plumbing command for storing DAG nodes.
+'ipws object put' is a plumbing command for storing DAG nodes.
 It reads from stdin, and the output is a base58 encoded multihash.
 `,
 		LongDescription: `
-'ipfs object put' is a plumbing command for storing DAG nodes.
+'ipws object put' is a plumbing command for storing DAG nodes.
 It reads from stdin, and the output is a base58 encoded multihash.
 
 Data should be in the format specified by the --inputenc flag.
@@ -376,7 +376,7 @@ Data should be in the format specified by the --inputenc flag.
 
 Examples:
 
-	$ echo '{ "Data": "abc" }' | ipfs object put
+	$ echo '{ "Data": "abc" }' | ipws object put
 
 This creates a node with the data 'abc' and no links. For an object with
 links, create a file named 'node.json' with the contents:
@@ -392,7 +392,7 @@ links, create a file named 'node.json' with the contents:
 
 And then run:
 
-	$ ipfs object put node.json
+	$ ipws object put node.json
 `,
 	},
 
@@ -466,12 +466,12 @@ And then run:
 // ObjectNewCmd object new command
 var ObjectNewCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Create a new object from an ipfs template.",
+		Tagline: "Create a new object from an ipws template.",
 		ShortDescription: `
-'ipfs object new' is a plumbing command for creating new DAG nodes.
+'ipws object new' is a plumbing command for creating new DAG nodes.
 `,
 		LongDescription: `
-'ipfs object new' is a plumbing command for creating new DAG nodes.
+'ipws object new' is a plumbing command for creating new DAG nodes.
 By default it creates and returns a new empty merkledag node, but
 you may pass an optional template argument to create a preformatted
 node.

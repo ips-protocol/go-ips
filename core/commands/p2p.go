@@ -25,6 +25,9 @@ import (
 // P2PProtoPrefix is the default required prefix for protocol names
 const P2PProtoPrefix = "/x/"
 
+// P2PProtoPrefixSystem is the system required prefix for protocol names
+const P2PProtoPrefixSystem = "/sys/"
+
 // P2PListenerInfoOutput is output type of ls command
 type P2PListenerInfoOutput struct {
 	Protocol      string
@@ -57,7 +60,7 @@ const (
 
 var resolveTimeout = 10 * time.Second
 
-// P2PCmd is the 'ipfs p2p' command
+// P2PCmd is the 'ipws p2p' command
 var P2PCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Libp2p stream mounting.",
@@ -87,7 +90,7 @@ Forward connections made to <listen-address> to <target-address>.
 connections and/or handlers. It must be prefixed with '` + P2PProtoPrefix + `'.
 
 Example:
-  ipfs p2p forward ` + P2PProtoPrefix + `myproto /ip4/127.0.0.1/tcp/4567 /ipfs/QmPeer
+  ipws p2p forward ` + P2PProtoPrefix + `myproto /ip4/127.0.0.1/tcp/4567 /ipfs/QmPeer
     - Forward connections to 127.0.0.1:4567 to '` + P2PProtoPrefix + `myproto' service on /ipfs/QmPeer
 
 `,
@@ -175,7 +178,7 @@ Create libp2p service and forward connections made to <target-address>.
 <protocol> specifies the libp2p handler name. It must be prefixed with '` + P2PProtoPrefix + `'.
 
 Example:
-  ipfs p2p listen ` + P2PProtoPrefix + `myproto /ip4/127.0.0.1/tcp/1234
+  ipws p2p listen ` + P2PProtoPrefix + `myproto /ip4/127.0.0.1/tcp/1234
     - Forward connections to 'myproto' libp2p service to 127.0.0.1:1234
 
 `,
@@ -288,6 +291,10 @@ var p2pLsCmd = &cmds.Command{
 
 		n.P2P.ListenersLocal.Lock()
 		for _, listener := range n.P2P.ListenersLocal.Listeners {
+			if strings.HasPrefix(string(listener.Protocol()), P2PProtoPrefixSystem) {
+				continue
+			}
+
 			output.Listeners = append(output.Listeners, P2PListenerInfoOutput{
 				Protocol:      string(listener.Protocol()),
 				ListenAddress: listener.ListenAddress().String(),
@@ -298,6 +305,10 @@ var p2pLsCmd = &cmds.Command{
 
 		n.P2P.ListenersP2P.Lock()
 		for _, listener := range n.P2P.ListenersP2P.Listeners {
+			if strings.HasPrefix(string(listener.Protocol()), P2PProtoPrefixSystem) {
+				continue
+			}
+
 			output.Listeners = append(output.Listeners, P2PListenerInfoOutput{
 				Protocol:      string(listener.Protocol()),
 				ListenAddress: listener.ListenAddress().String(),
@@ -384,6 +395,10 @@ var p2pCloseCmd = &cmds.Command{
 		}
 
 		match := func(listener p2p.Listener) bool {
+			if strings.HasPrefix(string(listener.Protocol()), P2PProtoPrefixSystem) {
+				return false
+			}
+
 			if closeAll {
 				return true
 			}
@@ -417,7 +432,7 @@ var p2pCloseCmd = &cmds.Command{
 // Stream
 //
 
-// p2pStreamCmd is the 'ipfs p2p stream' command
+// p2pStreamCmd is the 'ipws p2p stream' command
 var p2pStreamCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline:          "P2P stream management.",

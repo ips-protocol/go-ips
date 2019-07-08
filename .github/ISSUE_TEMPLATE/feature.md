@@ -6,7 +6,7 @@ labels:
 ---
 
 <!--
-Note: If you'd like to suggest an idea related to IPFS but not specifically related to the go implementation, please file an issue at https://github.com/ipfs/ipfs instead
+Note: If you'd like to suggest an idea related to IPWS but not specifically related to the go implementation, please file an issue at https://github.com/ipfs/ipfs instead
 
 When requesting a _feature_, please be sure to include:
   * Your motivation. Why do you need the feature?

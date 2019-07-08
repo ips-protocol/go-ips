@@ -29,9 +29,9 @@ type RepoVersion struct {
 
 var RepoCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Manipulate the IPFS repo.",
+		Tagline: "Manipulate the IPWS repo.",
 		ShortDescription: `
-'ipfs repo' is a plumbing command used to manipulate the repo.
+'ipws repo' is a plumbing command used to manipulate the repo.
 `,
 	},
 
@@ -59,7 +59,7 @@ var repoGcCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Perform a garbage collection sweep on the repo.",
 		ShortDescription: `
-'ipfs repo gc' is a plumbing command that will sweep the local
+'ipws repo gc' is a plumbing command that will sweep the local
 set of stored objects and remove ones that are not pinned in
 order to reclaim hard disk space.
 `,
@@ -139,7 +139,7 @@ var repoStatCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Get stats for the currently used repo.",
 		ShortDescription: `
-'ipfs repo stat' provides information about the local set of
+'ipws repo stat' provides information about the local set of
 stored objects. It outputs:
 
 RepoSize        int Size in bytes that the repo is currently taking.
@@ -216,8 +216,8 @@ var repoFsckCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Remove repo lockfiles.",
 		ShortDescription: `
-'ipfs repo fsck' is a plumbing command that will remove repo and level db
-lockfiles, as well as the api file. This command can only run when no ipfs
+'ipws repo fsck' is a plumbing command that will remove repo and level db
+lockfiles, as well as the api file. This command can only run when no ipws
 daemons are running.
 `,
 	},
@@ -379,7 +379,7 @@ var repoVersionCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Show the repo version.",
 		ShortDescription: `
-'ipfs repo version' returns the current repo version.
+'ipws repo version' returns the current repo version.
 `,
 	},
 
@@ -399,7 +399,7 @@ var repoVersionCmd = &cmds.Command{
 			if quiet {
 				fmt.Fprintf(w, "fs-repo@%s\n", out.Version)
 			} else {
-				fmt.Fprintf(w, "ipfs repo version fs-repo@%s\n", out.Version)
+				fmt.Fprintf(w, "ipws repo version fs-repo@%s\n", out.Version)
 			}
 			return nil
 		}),

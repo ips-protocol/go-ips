@@ -3,7 +3,7 @@ Package core implements the IpfsNode object and related methods.
 
 Packages underneath core/ provide a (relatively) stable, low-level API
 to carry out most IPFS-related tasks.  For more details on the other
-interfaces and how core/... fits into the bigger IPFS picture, see:
+interfaces and how core/... fits into the bigger IPWS picture, see:
 
   $ godoc github.com/ipfs/go-ipfs
 */
@@ -52,13 +52,15 @@ import (
 	"github.com/libp2p/go-libp2p/p2p/protocol/identify"
 )
 
+const LibP2PVersion = "ipws/0.9.0"
+
 var log = logging.Logger("core")
 
 func init() {
-	identify.ClientVersion = "go-ipfs/" + version.CurrentVersionNumber + "/" + version.CurrentCommit
+	identify.ClientVersion = "go-ipws/" + version.CurrentVersionNumber + "/" + version.CurrentCommit
 }
 
-// IpfsNode is IPFS Core module. It represents an IPFS instance.
+// IpfsNode is IPWS Core module. It represents an IPWS instance.
 type IpfsNode struct {
 
 	// Self
@@ -110,6 +112,8 @@ type IpfsNode struct {
 	// Flags
 	IsOnline bool `optional:"true"` // Online is set when networking is enabled.
 	IsDaemon bool `optional:"true"` // Daemon is set when running on a long-running daemon.
+
+	Beneficiary string
 }
 
 // Mounts defines what the node's mount state is. This should
@@ -177,8 +181,8 @@ func (n *IpfsNode) loadBootstrapPeers() ([]pstore.PeerInfo, error) {
 
 type ConstructPeerHostOpts struct {
 	AddrsFactory      p2pbhost.AddrsFactory
-	DisableNatPortMap bool
-	DisableRelay      bool
-	EnableRelayHop    bool
+	// DisableNatPortMap bool
+	// DisableRelay      bool
+	// EnableRelayHop    bool
 	ConnectionManager ifconnmgr.ConnManager
 }

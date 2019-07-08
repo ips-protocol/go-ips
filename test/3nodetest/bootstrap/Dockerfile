@@ -1,11 +1,11 @@
-FROM zaqwsx_ipfs-test-img
+FROM zaqwsx_ipws-test-img
 
-RUN ipfs init -b=1024
+RUN ipws init -b=1024
 ADD . /tmp/id
-RUN mv -f /tmp/id/config /root/.ipfs/config
-RUN ipfs id
+RUN mv -f /tmp/id/config /root/.ipws/config
+RUN ipws id
 
-ENV IPFS_PROF true
-ENV IPFS_LOGGING_FMT nocolor
+ENV IPWS_PROF true
+ENV IPWS_LOGGING_FMT nocolor
 
 EXPOSE 4011 4012/udp

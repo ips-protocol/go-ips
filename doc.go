@@ -1,4 +1,4 @@
 /*
-IPFS is a global, versioned, peer-to-peer filesystem
+IPWS is a global, versioned, peer-to-peer filesystem
 */
 package ipfs

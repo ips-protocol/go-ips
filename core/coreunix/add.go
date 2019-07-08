@@ -1,6 +1,7 @@
 package coreunix
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -25,6 +26,9 @@ import (
 	"github.com/ipfs/go-unixfs/importer/trickle"
 	coreiface "github.com/ipweb-group/interface-go-ipws-core"
 	"github.com/ipweb-group/interface-go-ipws-core/path"
+
+	"github.com/ipweb-group/go-ipws-config"
+	"github.com/ipfs/go-ipfs/metafile"
 )
 
 var log = logging.Logger("coreunix")
@@ -76,6 +80,9 @@ type Adder struct {
 	tempRoot   cid.Cid
 	CidBuilder cid.Builder
 	liveNodes  uint64
+	Config     config.Config
+	FileHash   string
+	BlockIndex uint32
 }
 
 func (adder *Adder) mfsRoot() (*mfs.Root, error) {
@@ -377,6 +384,16 @@ func (adder *Adder) addFile(path string, file files.File) error {
 	// if the progress flag was specified, wrap the file so that we can send
 	// progress updates to the client (over the output channel)
 	var reader io.Reader = file
+
+	data := metafile.StreamToByte(reader)
+	reader = bytes.NewReader(data)
+
+	meta, err := metafile.GetMeta(data)
+	if err == nil {
+		adder.BlockIndex = uint32(meta.MetaHeader.BlockIdx)
+		adder.FileHash = meta.MetaBody.FHash
+	}
+
 	if adder.Progress {
 		rdr := &progressReader{file: reader, path: path, out: adder.Out}
 		if fi, ok := file.(files.FileInfo); ok {

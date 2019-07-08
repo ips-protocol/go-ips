@@ -18,7 +18,7 @@ test_expect_success "create fake ipfs-update bin" '
   mkdir bin &&
   echo "#!/bin/sh" > bin/ipfs-update &&
   echo "pwd" >> bin/ipfs-update &&
-  echo "test -e \"$IPFS_PATH/repo.lock\" || echo \"repo not locked\" " >> bin/ipfs-update &&
+  echo "test -e \"$IPWS_PATH/repo.lock\" || echo \"repo not locked\" " >> bin/ipfs-update &&
   chmod +x bin/ipfs-update &&
   mkdir just_for_test
 '

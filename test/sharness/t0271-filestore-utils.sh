@@ -10,7 +10,7 @@ test_description="Test out the filestore nocopy functionality"
 
 test_init_filestore() {
   test_expect_success "clean up old node" '
-    rm -rf "$IPFS_PATH" mountdir ipfs ipns
+    rm -rf "$IPWS_PATH" mountdir ipfs ipns
   '
 
   test_init_ipfs

@@ -187,7 +187,7 @@ EOF
   '
 
   test_expect_success "ipfs cleanup" '
-    rm -rf "$IPFS_PATH" && rmdir ipfs ipns mountdir
+    rm -rf "$IPWS_PATH" && rmdir ipfs ipns mountdir
   '
 }
 

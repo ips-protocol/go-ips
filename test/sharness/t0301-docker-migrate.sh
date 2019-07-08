@@ -28,7 +28,7 @@ test_expect_success "docker image build succeeds" '
 test_init_ipfs
 
 test_expect_success "make repo be version 4" '
-  echo 4 > "$IPFS_PATH/version"
+  echo 4 > "$IPWS_PATH/version"
 '
 
 test_expect_success "setup http response" '
@@ -48,7 +48,7 @@ test_expect_success "startup fake dists server" '
 '
 
 test_expect_success "docker image runs" '
-  DOC_ID=$(docker run -d -v "$IPFS_PATH":/data/ipfs --net=host -e IPFS_DIST_PATH="http://localhost:17233" "$IMAGE_ID" --migrate)
+  DOC_ID=$(docker run -d -v "$IPWS_PATH":/data/ipfs --net=host -e IPFS_DIST_PATH="http://localhost:17233" "$IMAGE_ID" --migrate)
 '
 
 test_expect_success "docker container tries to pull migrations from netcat" '

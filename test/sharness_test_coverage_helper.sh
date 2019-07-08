@@ -43,61 +43,61 @@ DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")
 TMPDIR=$(mktemp -d "/tmp/coverage_helper.$DATE.XXXXXX") ||
 die "could not 'mktemp -d /tmp/coverage_helper.$DATE.XXXXXX'"
 
-log "Grep the sharness tests for ipfs commands"
-CMD_RAW="$TMPDIR/ipfs_cmd_raw.txt"
-git grep -n -E '\Wipfs\W' -- sharness/t*-*.sh >"$CMD_RAW" ||
-die "Could not grep ipfs in the sharness tests"
+log "Grep the sharness tests for ipws commands"
+CMD_RAW="$TMPDIR/ipws_cmd_raw.txt"
+git grep -n -E '\Wipws\W' -- sharness/t*-*.sh >"$CMD_RAW" ||
+die "Could not grep ipws in the sharness tests"
 
 grep_out() {
     pattern="$1"
-    src="$TMPDIR/ipfs_cmd_${2}.txt"
-    dst="$TMPDIR/ipfs_cmd_${3}.txt"
+    src="$TMPDIR/ipws_cmd_${2}.txt"
+    dst="$TMPDIR/ipws_cmd_${3}.txt"
     desc="$4"
 
     log "Remove $desc"
     egrep -v "$pattern" "$src" >"$dst" || die "Could not remove $desc"
 }
 
-grep_out 'test_expect_.*ipfs' raw expect "test_expect_{success,failure} lines"
+grep_out 'test_expect_.*ipws' raw expect "test_expect_{success,failure} lines"
 grep_out '^[^:]+:[^:]+:\s*#' expect comment "comments"
 grep_out 'test_description=' comment desc "test_description lines"
 grep_out '^[^:]+:[^:]+:\s*\w+="[^"]*"\s*(\&\&)?\s*$' desc def "variable definition lines"
-grep_out '^[^:]+:[^:]+:\s*e?grep\W[^|]*\Wipfs' def grep "grep lines"
-grep_out '^[^:]+:[^:]+:\s*cat\W[^|]*\Wipfs' grep cat "cat lines"
-grep_out '^[^:]+:[^:]+:\s*rmdir\W[^|]*\Wipfs' cat rmdir "rmdir lines"
-grep_out '^[^:]+:[^:]+:\s*echo\W[^|]*\Wipfs' cat echo "echo lines"
+grep_out '^[^:]+:[^:]+:\s*e?grep\W[^|]*\Wipws' def grep "grep lines"
+grep_out '^[^:]+:[^:]+:\s*cat\W[^|]*\Wipws' grep cat "cat lines"
+grep_out '^[^:]+:[^:]+:\s*rmdir\W[^|]*\Wipws' cat rmdir "rmdir lines"
+grep_out '^[^:]+:[^:]+:\s*echo\W[^|]*\Wipws' cat echo "echo lines"
 
 grep_in() {
     pattern="$1"
-    src="$TMPDIR/ipfs_cmd_${2}.txt"
-    dst="$TMPDIR/ipfs_cmd_${3}.txt"
+    src="$TMPDIR/ipws_cmd_${2}.txt"
+    dst="$TMPDIR/ipws_cmd_${3}.txt"
     desc="$4"
 
     log "Keep $desc"
     egrep "$pattern" "$src" >"$dst"
 }
 
-grep_in '\Wipfs\W.*/ipfs/' echo slash_in1 "ipfs.*/ipfs/"
-grep_in '/ipfs/.*\Wipfs\W' echo slash_in2 "/ipfs/.*ipfs"
+grep_in '\Wipws\W.*/ipws/' echo slash_in1 "ipws.*/ipws/"
+grep_in '/ipws/.*\Wipws\W' echo slash_in2 "/ipws/.*ipws"
 
-grep_out '/ipfs/' echo slash "/ipfs/"
+grep_out '/ipws/' echo slash "/ipws/"
 
-grep_in '\Wipfs\W.*\.ipfs' slash dot_in1 "ipfs.*\.ipfs"
-grep_in '\.ipfs.*\Wipfs\W' slash dot_in2 "\.ipfs.*ipfs"
+grep_in '\Wipws\W.*\.ipws' slash dot_in1 "ipws.*\.ipws"
+grep_in '\.ipws.*\Wipws\W' slash dot_in2 "\.ipws.*ipws"
 
-grep_out '\.ipfs' slash dot ".ipfs"
+grep_out '\.ipws' slash dot ".ipws"
 
 log "Print result"
-CMD_RES="$TMPDIR/ipfs_cmd_result.txt"
+CMD_RES="$TMPDIR/ipws_cmd_result.txt"
 for f in dot slash_in1 slash_in2 dot_in1 dot_in2
 do
-    fname="$TMPDIR/ipfs_cmd_${f}.txt"
+    fname="$TMPDIR/ipws_cmd_${f}.txt"
     cat "$fname" || die "Could not cat '$fname'"
 done | sort | uniq >"$CMD_RES" || die "Could not write '$CMD_RES'"
 
-log "Get all the ipfs commands from 'ipfs commands'"
+log "Get all the ipws commands from 'ipws commands'"
 CMD_CMDS="$TMPDIR/commands.txt"
-ipfs commands --flags >"$CMD_CMDS" || die "'ipfs commands' failed"
+ipws commands --flags >"$CMD_CMDS" || die "'ipws commands' failed"
 
 # Portable function to reverse lines in a file
 reverse() {
@@ -113,7 +113,7 @@ log "Match the test line commands with the commands they use"
 GLOBAL_REV="$TMPDIR/global_results_reversed.txt"
 
 process_command() {
-    ipfs="$1"
+    ipws="$1"
     cmd="$2"
     sub1="$3"
     sub2="$4"
@@ -121,9 +121,9 @@ process_command() {
 
     if test -n "$cmd"
     then
-	CMD_OUT="$TMPDIR/res_${ipfs}_${cmd}"
-	PATTERN="$ipfs(\W.*)*\W$cmd"
-	NAME="$ipfs $cmd"
+	CMD_OUT="$TMPDIR/res_${ipws}_${cmd}"
+	PATTERN="$ipws(\W.*)*\W$cmd"
+	NAME="$ipws $cmd"
 
 	if test -n "$sub1"
 	then
@@ -165,13 +165,13 @@ do
     SHORT_NAME="$NAME"
 
     test -n "$SHORT_CMD" && echo "$SHORT_NAME" >>"$GLOBAL_REV"
-    test "$LONG_CMD" != "ipfs" && echo "$LONG_NAME" >>"$GLOBAL_REV"
+    test "$LONG_CMD" != "ipws" && echo "$LONG_NAME" >>"$GLOBAL_REV"
     echo >>"$GLOBAL_REV"
 done
 
 # The following will allow us to check that
 # we are properly excuding enough stuff using:
-# diff -u ipfs_cmd_result.txt cmd_found.txt
+# diff -u ipws_cmd_result.txt cmd_found.txt
 log "Get all the line commands that matched"
 CMD_FOUND="$TMPDIR/cmd_found.txt"
 cat $TMPDIR/res_*.txt | sort -n | uniq >"$CMD_FOUND"

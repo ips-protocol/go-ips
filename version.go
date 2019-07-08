@@ -7,4 +7,4 @@ var CurrentCommit string
 // const CurrentVersionNumber = "0.4.21"
 const CurrentVersionNumber = "0.9.0"
 
-const ApiVersion = "/go-ipfs/" + CurrentVersionNumber + "/"
+const ApiVersion = "/go-ipws/" + CurrentVersionNumber + "/"

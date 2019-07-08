@@ -52,8 +52,8 @@ test_cat_get() {
 
 test_gc() {
   test_expect_success "injecting insecure block" '
-    mkdir -p "$IPFS_PATH/blocks/JZ" &&
-    cp -f ../t0275-cid-security-data/AFKSEBCGPUJZE.data "$IPFS_PATH/blocks/JZ"
+    mkdir -p "$IPWS_PATH/blocks/JZ" &&
+    cp -f ../t0275-cid-security-data/AFKSEBCGPUJZE.data "$IPWS_PATH/blocks/JZ"
   '
 
   test_expect_success "gc works" 'ipfs repo gc > gc_out'
@@ -73,8 +73,8 @@ test_cat_get
 test_gc
 
 test_expect_success "add block linking to insecure" '
-  mkdir -p "$IPFS_PATH/blocks/5X" &&
-  cp -f "../t0275-cid-security-data/CIQG6PGTD2VV34S33BE4MNCQITBRFYUPYQLDXYARR3DQW37MOT7K5XI.data" "$IPFS_PATH/blocks/5X"
+  mkdir -p "$IPWS_PATH/blocks/5X" &&
+  cp -f "../t0275-cid-security-data/CIQG6PGTD2VV34S33BE4MNCQITBRFYUPYQLDXYARR3DQW37MOT7K5XI.data" "$IPWS_PATH/blocks/5X"
 '
 
 test_expect_success "ipfs cat fails with code 1 and not timeout" '

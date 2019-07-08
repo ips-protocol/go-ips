@@ -23,6 +23,8 @@ import (
 	"github.com/ipfs/go-path/resolver"
 	uio "github.com/ipfs/go-unixfs/io"
 	"go.uber.org/fx"
+
+	"github.com/libp2p/go-libp2p/p2p/protocol/identify"
 )
 
 var BaseLibP2P = fx.Options(
@@ -96,10 +98,12 @@ func LibP2P(bcfg *BuildCfg, cfg *config.Config) fx.Option {
 		BaseLibP2P,
 
 		fx.Provide(libp2p.AddrFilters(cfg.Swarm.AddrFilters)),
-		fx.Invoke(libp2p.SetupDiscovery(cfg.Discovery.MDNS.Enabled, cfg.Discovery.MDNS.Interval)),
+		// fx.Invoke(libp2p.SetupDiscovery(cfg.Discovery.MDNS.Enabled, cfg.Discovery.MDNS.Interval)),
+		fx.Invoke(libp2p.SetupDiscovery(true, cfg.Discovery.MDNS.Interval)),
 		fx.Provide(libp2p.AddrsFactory(cfg.Addresses.Announce, cfg.Addresses.NoAnnounce)),
 		fx.Provide(libp2p.SmuxTransport(bcfg.getOpt("mplex"))),
-		fx.Provide(libp2p.Relay(cfg.Swarm.DisableRelay, cfg.Swarm.EnableRelayHop)),
+		// fx.Provide(libp2p.Relay(cfg.Swarm.DisableRelay, cfg.Swarm.EnableRelayHop)),
+		fx.Provide(libp2p.Relay(false, true)),
 		fx.Invoke(libp2p.StartListening(cfg.Addresses.Swarm)),
 
 		fx.Provide(libp2p.Security(!bcfg.DisableEncryptedConnections, cfg.Experimental.PreferTLS)),
@@ -108,11 +112,16 @@ func LibP2P(bcfg *BuildCfg, cfg *config.Config) fx.Option {
 		fx.Provide(libp2p.BaseRouting),
 		maybeProvide(libp2p.PubsubRouter, bcfg.getOpt("ipnsps")),
 
-		maybeProvide(libp2p.BandwidthCounter, !cfg.Swarm.DisableBandwidthMetrics),
-		maybeProvide(libp2p.NatPortMap, !cfg.Swarm.DisableNatPortMap),
-		maybeProvide(libp2p.AutoRealy, cfg.Swarm.EnableAutoRelay),
-		maybeProvide(libp2p.QUIC, cfg.Experimental.QUIC),
-		maybeInvoke(libp2p.AutoNATService(cfg.Experimental.QUIC), cfg.Swarm.EnableAutoNATService),
+		// maybeProvide(libp2p.BandwidthCounter, !cfg.Swarm.DisableBandwidthMetrics),
+		maybeProvide(libp2p.BandwidthCounter, true),
+		// maybeProvide(libp2p.NatPortMap, !cfg.Swarm.DisableNatPortMap),
+		maybeProvide(libp2p.NatPortMap, true),
+		// maybeProvide(libp2p.AutoRealy, cfg.Swarm.EnableAutoRelay),
+		maybeProvide(libp2p.AutoRealy, true),
+		// maybeProvide(libp2p.QUIC, cfg.Experimental.QUIC),
+		maybeProvide(libp2p.QUIC, true),
+		// maybeInvoke(libp2p.AutoNATService(cfg.Experimental.QUIC), cfg.Swarm.EnableAutoNATService),
+		maybeInvoke(libp2p.AutoNATService(true), true),
 		connmgr,
 		ps,
 	)
@@ -147,10 +156,10 @@ func Identity(cfg *config.Config) fx.Option {
 
 	cid := cfg.Identity.PeerID
 	if cid == "" {
-		return fx.Error(errors.New("identity was not set in config (was 'ipfs init' run?)"))
+		return fx.Error(errors.New("identity was not set in config (was 'ipws init' run?)"))
 	}
 	if len(cid) == 0 {
-		return fx.Error(errors.New("no peer ID in config! (was 'ipfs init' run?)"))
+		return fx.Error(errors.New("no peer ID in config! (was 'ipws init' run?)"))
 	}
 
 	id, err := peer.IDB58Decode(cid)
@@ -178,6 +187,31 @@ func Identity(cfg *config.Config) fx.Option {
 		fx.Provide(pstoremem.NewPeerstore),
 
 		fx.Invoke(libp2p.PstoreAddSelfKeys),
+	)
+}
+
+// Beneficiary groups units providing beneficiary
+func Beneficiary(cfg *config.Config) fx.Option {
+	_, err := cfg.Chain.WalletKey()
+	if err != nil {
+		// fmt.Println("the wallet privatekey or keystore not found.\nplease run: 'ipws config Chain.WalletPriKey <PrivateKey>'\nor          'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+		return fx.Options(
+			fx.Provide(""),
+		)
+	}
+
+	address, err := cfg.Chain.WalletAddress()
+	if err != nil {
+		// fmt.Println("the wallet privatekey or keystore not found.\nplease run: 'ipws config Chain.WalletPriKey <PrivateKey>'\nor          'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+		return fx.Options(
+			fx.Provide(""),
+		)
+	}
+
+	identify.ClientVersion = identify.ClientVersion + "/" + address
+
+	return fx.Options(
+		fx.Provide(Address(address)),
 	)
 }
 
@@ -282,7 +316,7 @@ var Offline = fx.Options(
 	fx.Provide(provider.NewOfflineProvider),
 )
 
-// Core groups basic IPFS services
+// Core groups basic IPWS services
 var Core = fx.Options(
 	fx.Provide(BlockService),
 	fx.Provide(Dag),
@@ -319,6 +353,7 @@ func IPFS(ctx context.Context, bcfg *BuildCfg) fx.Option {
 
 		Storage(bcfg, cfg),
 		Identity(cfg),
+		Beneficiary(cfg),
 		IPNS,
 		Networked(bcfg, cfg),
 

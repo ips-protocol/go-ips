@@ -8,7 +8,7 @@
     "Bootstrap": [
     ],
     "Datastore": {
-        "Path": "/root/.ipfs/datastore",
+        "Path": "/root/.ipws/datastore",
         "Type": "leveldb"
     },
     "Identity": {

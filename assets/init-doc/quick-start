@@ -4,15 +4,15 @@ This is a set of short examples with minimal explanation. It is meant as
 a "quick start".
 
 
-Add a file to ipfs:
+Add a file to ipws:
 
   echo "hello world" >hello
-  ipfs add hello
+  ipws add hello
 
 
 View it:
 
-  ipfs cat <the-hash-you-got-here>
+  ipws cat <the-hash-you-got-here>
 
 
 Try a directory:
@@ -21,76 +21,76 @@ Try a directory:
   mkdir foo/bar
   echo "baz" > foo/baz
   echo "baz" > foo/bar/baz
-  ipfs add -r foo
+  ipws add -r foo
 
 
 View things:
 
-  ipfs ls <the-hash-here>
-  ipfs ls <the-hash-here>/bar
-  ipfs cat <the-hash-here>/baz
-  ipfs cat <the-hash-here>/bar/baz
-  ipfs cat <the-hash-here>/bar
-  ipfs ls <the-hash-here>/baz
+  ipws ls <the-hash-here>
+  ipws ls <the-hash-here>/bar
+  ipws cat <the-hash-here>/baz
+  ipws cat <the-hash-here>/bar/baz
+  ipws cat <the-hash-here>/bar
+  ipws ls <the-hash-here>/baz
 
 
 References:
 
-  ipfs refs <the-hash-here>
-  ipfs refs -r <the-hash-here>
-  ipfs refs --help
+  ipws refs <the-hash-here>
+  ipws refs -r <the-hash-here>
+  ipws refs --help
 
 
 Get:
 
-  ipfs get <the-hash-here> -o foo2
+  ipws get <the-hash-here> -o foo2
   diff foo foo2
 
 
 Objects:
 
-  ipfs object get <the-hash-here>
-  ipfs object get <the-hash-here>/foo2
-  ipfs object --help
+  ipws object get <the-hash-here>
+  ipws object get <the-hash-here>/foo2
+  ipws object --help
 
 
 Pin + GC:
 
-  ipfs pin add <the-hash-here>
-  ipfs repo gc
-  ipfs ls <the-hash-here>
-  ipfs pin rm <the-hash-here>
-  ipfs repo gc
+  ipws pin add <the-hash-here>
+  ipws repo gc
+  ipws ls <the-hash-here>
+  ipws pin rm <the-hash-here>
+  ipws repo gc
 
 
 Daemon:
 
-  ipfs daemon  (in another terminal)
-  ipfs id
+  ipws daemon  (in another terminal)
+  ipws id
 
 
 Network:
 
   (must be online)
-  ipfs swarm peers
-  ipfs id
-  ipfs cat <hash-of-remote-object>
+  ipws swarm peers
+  ipws id
+  ipws cat <hash-of-remote-object>
 
 
 Mount:
 
   (warning: fuse is finicky!)
-  ipfs mount
-  cd /ipfs/<the-hash-here>
+  ipws mount
+  cd /ipws/<the-hash-here>
   ls
 
 
 Tool:
 
-  ipfs version
-  ipfs update
-  ipfs commands
-  ipfs config --help
+  ipws version
+  ipws update
+  ipws commands
+  ipws config --help
   open http://localhost:5001/webui
 
 

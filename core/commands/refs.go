@@ -42,12 +42,12 @@ const (
 	refsMaxDepthOptionName  = "max-depth"
 )
 
-// RefsCmd is the `ipfs refs` command
+// RefsCmd is the `ipws refs` command
 var RefsCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "List links (references) from an object.",
 		ShortDescription: `
-Lists the hashes of all the links an IPFS or IPNS object(s) contains,
+Lists the hashes of all the links an IPWS or IPNS object(s) contains,
 with the following format:
 
   <link base58 hash>

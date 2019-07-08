@@ -16,7 +16,7 @@ test_expect_success "create a dataset" '
 EXPHASH="QmW4JLyeTxEWGwa4mkE9mHzdtAkyhMX2ToGFEKZNjCiJud"
 
 get_repo_size() {
-  disk_usage "$IPFS_PATH"
+  disk_usage "$IPWS_PATH"
 }
 
 assert_repo_size_less_than() {
@@ -63,7 +63,7 @@ test_filestore_adds() {
 
 init_ipfs_filestore() {
   test_expect_success "clean up old node" '
-    rm -rf "$IPFS_PATH" mountdir ipfs ipns
+    rm -rf "$IPWS_PATH" mountdir ipfs ipns
   '
 
   test_init_ipfs
@@ -99,7 +99,7 @@ init_ipfs_filestore
 test_filestore_adds
 
 test_debug '
-  echo "pwd=$(pwd)"; echo "IPFS_PATH=$IPFS_PATH"
+  echo "pwd=$(pwd)"; echo "IPWS_PATH=$IPWS_PATH"
 '
 
 

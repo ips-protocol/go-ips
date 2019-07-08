@@ -8,7 +8,7 @@ import (
 
 var daemonShutdownCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Shut down the ipfs daemon",
+		Tagline: "Shut down the ipws daemon",
 	},
 	Run: func(req *cmds.Request, re cmds.ResponseEmitter, env cmds.Environment) error {
 		nd, err := cmdenv.GetNode(env)
@@ -21,7 +21,7 @@ var daemonShutdownCmd = &cmds.Command{
 		}
 
 		if err := nd.Close(); err != nil {
-			log.Error("error while shutting down ipfs daemon:", err)
+			log.Error("error while shutting down ipws daemon:", err)
 		}
 
 		return nil

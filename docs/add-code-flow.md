@@ -1,6 +1,6 @@
-# IPFS : The `Add` command demystified
+# IPWS : The `Add` command demystified
 
-The goal of this document is to capture the code flow for adding a file (see the `coreapi` package) using the IPFS CLI, in the process exploring some datastructures and packages like `ipld.Node` (aka `dagnode`), `FSNode`, `MFS`, etc.
+The goal of this document is to capture the code flow for adding a file (see the `coreapi` package) using the IPWS CLI, in the process exploring some datastructures and packages like `ipld.Node` (aka `dagnode`), `FSNode`, `MFS`, etc.
 
 ## Concepts
 - [Files](https://github.com/ipfs/docs/issues/133)
@@ -10,18 +10,18 @@ The goal of this document is to capture the code flow for adding a file (see the
 **Try this yourself**
 > 
 > ```
-> # Convert a file to the IPFS format.
+> # Convert a file to the IPWS format.
 > echo "Hello World" > new-file
-> ipfs add new-file
+> ipws add new-file
 > added QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u new-file
 > 12 B / 12 B [=========================================================] 100.00%
 >
 > # Add a file to the MFS.
-> NEW_FILE_HASH=$(ipfs add new-file -Q)
-> ipfs files cp /ipfs/$NEW_FILE_HASH /new-file
+> NEW_FILE_HASH=$(ipws add new-file -Q)
+> ipws files cp /ipfs/$NEW_FILE_HASH /new-file
 > 
 > # Get information from the file in MFS.
-> ipfs files stat /new-file
+> ipws files stat /new-file
 > # QmWATWQ7fVPP2EFGu71UkfnqhYXDYH566qy47CnJDgvs8u
 > # Size: 12
 > # CumulativeSize: 20
@@ -29,7 +29,7 @@ The goal of this document is to capture the code flow for adding a file (see the
 > # Type: file
 > 
 > # Retrieve the contents.
-> ipfs files read /new-file
+> ipws files read /new-file
 > # Hello World
 > ```
 

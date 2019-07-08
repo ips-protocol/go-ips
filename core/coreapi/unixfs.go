@@ -3,6 +3,7 @@ package coreapi
 import (
 	"context"
 	"fmt"
+	"io"
 
 	"github.com/ipfs/go-ipfs/core"
 
@@ -24,6 +25,9 @@ import (
 	coreiface "github.com/ipweb-group/interface-go-ipws-core"
 	options "github.com/ipweb-group/interface-go-ipws-core/options"
 	path "github.com/ipweb-group/interface-go-ipws-core/path"
+
+	"github.com/ipfs/go-ipfs/chain"
+	"github.com/ipfs/go-ipfs/metafile"
 )
 
 type UnixfsAPI CoreAPI
@@ -82,6 +86,8 @@ func (api *UnixfsAPI) Add(ctx context.Context, files files.Node, opts ...options
 		return nil, err
 	}
 
+	fileAdder.Config = *cfg
+
 	fileAdder.Chunker = settings.Chunker
 	if settings.Events != nil {
 		fileAdder.Out = settings.Events
@@ -131,6 +137,18 @@ func (api *UnixfsAPI) Add(ctx context.Context, files files.Node, opts ...options
 		return nil, err
 	}
 
+	if fileAdder.FileHash != "" {
+		privateKey, err := cfg.Chain.WalletKey()
+		if err != nil {
+			return nil, err
+		}
+		proof, _ := chain.Proof([]byte(nd.Cid().String()), privateKey)
+		err = chain.CommitBlockInfo(cfg, fileAdder.FileHash, fileAdder.BlockIndex, nd.Cid().String(), proof)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	return path.IpfsPath(nd.Cid()), nil
 }
 
@@ -142,10 +160,48 @@ func (api *UnixfsAPI) Get(ctx context.Context, p path.Path) (files.Node, error) 
 		return nil, err
 	}
 
-	return unixfile.NewUnixfsFile(ctx, ses.dag, nd)
+	// return unixfile.NewUnixfsFile(ctx, ses.dag, nd)
+	fn, err := unixfile.NewUnixfsFile(ctx, ses.dag, nd)
+	if err != nil {
+		return fn, err
+	}
+
+	var file files.File
+	switch f := fn.(type) {
+	case files.File:
+		file = f
+	default:
+		return fn, err
+	}
+
+	var reader io.Reader = file
+	data := metafile.StreamToByte(reader)
+	fn, _ = unixfile.NewUnixfsFile(ctx, ses.dag, nd)
+
+	meta, err := metafile.GetMeta(data)
+	if err != nil {
+		return fn, nil
+	}
+
+	fHash := meta.MetaBody.FHash
+	if fHash != "" {
+		bIndex := uint32(meta.MetaHeader.BlockIdx)
+		cfg, _ := api.repo.Config()
+		privateKey, err := cfg.Chain.WalletKey()
+		if err != nil {
+			fmt.Println(err)
+		}
+		proof, _ := chain.Proof([]byte(nd.Cid().String()), privateKey)
+		err = chain.DownloadBlock(cfg, fHash, bIndex, nd.Cid().String(), proof)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	return fn, nil
 }
 
-// Ls returns the contents of an IPFS or IPNS object(s) at path p, with the format:
+// Ls returns the contents of an IPWS or IPNS object(s) at path p, with the format:
 // `<link base58 hash> <link size in bytes> <link name>`
 func (api *UnixfsAPI) Ls(ctx context.Context, p path.Path, opts ...options.UnixfsLsOption) (<-chan coreiface.DirEntry, error) {
 	settings, err := options.UnixfsLsOptions(opts...)

@@ -6,7 +6,7 @@ $(d)/coverage_deps: $$(DEPS_GO)
 	rm -rf $(@D)/unitcover && mkdir $(@D)/unitcover
 	rm -rf $(@D)/sharnesscover && mkdir $(@D)/sharnesscover
 
-ifneq ($(IPFS_SKIP_COVER_BINS),1)
+ifneq ($(IPWS_SKIP_COVER_BINS),1)
 $(d)/coverage_deps: test/bin/gocovmerge
 endif
 
@@ -33,21 +33,21 @@ TGTS_$(d) := $(d)/unit_tests.coverprofile
 .PHONY: $(d)/unit_tests.coverprofile
 
 # sharness tests coverage
-$(d)/ipfs: GOTAGS += testrunmain
-$(d)/ipfs: $(d)/main
+$(d)/ipws: GOTAGS += testrunmain
+$(d)/ipws: $(d)/main
 	$(go-build-relative)
 
-CLEAN += $(d)/ipfs
+CLEAN += $(d)/ipws
 
 ifneq ($(filter coverage%,$(MAKECMDGOALS)),)
 	# this is quite hacky but it is best way I could fiture out
-	DEPS_test/sharness += cmd/ipfs/ipfs-test-cover $(d)/coverage_deps $(d)/ipfs
+	DEPS_test/sharness += cmd/ipws/ipws-test-cover $(d)/coverage_deps $(d)/ipws
 endif
 
-export IPFS_COVER_DIR:= $(realpath $(d))/sharnesscover/
+export IPWS_COVER_DIR:= $(realpath $(d))/sharnesscover/
 
 $(d)/sharness_tests.coverprofile: export TEST_NO_PLUGIN=1
-$(d)/sharness_tests.coverprofile: $(d)/ipfs cmd/ipfs/ipfs-test-cover $(d)/coverage_deps test_sharness_short
+$(d)/sharness_tests.coverprofile: $(d)/ipws cmd/ipws/ipws-test-cover $(d)/coverage_deps test_sharness_short
 	(cd $(@D)/sharnesscover && find . -type f | gocovmerge -list -) > $@
 
 

@@ -15,9 +15,9 @@ test_expect_success "ipfs id succeeds" '
 '
 
 test_expect_success "make a bad plugin" '
-  mkdir -p "$IPFS_PATH/plugins" &&
-  echo foobar > "$IPFS_PATH/plugins/foo.so" &&
-  chmod +x "$IPFS_PATH/plugins/foo.so"
+  mkdir -p "$IPWS_PATH/plugins" &&
+  echo foobar > "$IPWS_PATH/plugins/foo.so" &&
+  chmod +x "$IPWS_PATH/plugins/foo.so"
 '
 
 test_expect_success "ipfs id fails due to a bad plugin" '
@@ -25,7 +25,7 @@ test_expect_success "ipfs id fails due to a bad plugin" '
 '
 
 test_expect_success "cleanup bad plugin" '
-  rm "$IPFS_PATH/plugins/foo.so"
+  rm "$IPWS_PATH/plugins/foo.so"
 '
 
 test_done

@@ -19,13 +19,13 @@ import (
 	identify "github.com/libp2p/go-libp2p/p2p/protocol/identify"
 )
 
-const offlineIdErrorMessage = `'ipfs id' currently cannot query information on remote
+const offlineIdErrorMessage = `'ipws id' currently cannot query information on remote
 peers without a running daemon; we are working to fix this.
-In the meantime, if you want to query remote peers using 'ipfs id',
+In the meantime, if you want to query remote peers using 'ipws id',
 please run the daemon:
 
-    ipfs daemon &
-    ipfs id QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ
+    ipws daemon &
+    ipws id QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ
 `
 
 type IdOutput struct {
@@ -34,6 +34,7 @@ type IdOutput struct {
 	Addresses       []string
 	AgentVersion    string
 	ProtocolVersion string
+	Beneficiary     string
 }
 
 const (
@@ -42,21 +43,22 @@ const (
 
 var IDCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Show ipfs node id info.",
+		Tagline: "Show ipws node id info.",
 		ShortDescription: `
 Prints out information about the specified peer.
 If no peer is specified, prints out information for local peers.
 
-'ipfs id' supports the format option for output with the following keys:
+'ipws id' supports the format option for output with the following keys:
 <id> : The peers id.
 <aver>: Agent version.
 <pver>: Protocol version.
+<bene>: Beneficiary.
 <pubkey>: Public key.
 <addrs>: Addresses (newline delimited).
 
 EXAMPLE:
 
-    ipfs id Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH -f="<addrs>\n"
+    ipws id Qmece2RkXhsKe5CRooNisBTh4SK119KrXXGmoK6V3kb8aH -f="<addrs>\n"
 `,
 	},
 	Arguments: []cmds.Argument{
@@ -118,6 +120,7 @@ EXAMPLE:
 				output = strings.Replace(output, "<aver>", out.AgentVersion, -1)
 				output = strings.Replace(output, "<pver>", out.ProtocolVersion, -1)
 				output = strings.Replace(output, "<pubkey>", out.PublicKey, -1)
+				output = strings.Replace(output, "<bene>", out.Beneficiary, -1)
 				output = strings.Replace(output, "<addrs>", strings.Join(out.Addresses, "\n"), -1)
 				output = strings.Replace(output, "\\n", "\n", -1)
 				output = strings.Replace(output, "\\t", "\t", -1)
@@ -156,14 +159,21 @@ func printPeer(ps pstore.Peerstore, p peer.ID) (interface{}, error) {
 		info.Addresses = append(info.Addresses, a.String())
 	}
 
-	if v, err := ps.Get(p, "ProtocolVersion"); err == nil {
-		if vs, ok := v.(string); ok {
-			info.ProtocolVersion = vs
-		}
-	}
+	// if v, err := ps.Get(p, "ProtocolVersion"); err == nil {
+	// 	if vs, ok := v.(string); ok {
+	// 		info.ProtocolVersion = vs
+	// 	}
+	// }
+	info.ProtocolVersion = core.LibP2PVersion
 	if v, err := ps.Get(p, "AgentVersion"); err == nil {
 		if vs, ok := v.(string); ok {
-			info.AgentVersion = vs
+			if c := strings.Count(vs, "/"); c == 3 {
+				pos := strings.LastIndex(vs, "/")
+				info.AgentVersion = vs[0:pos]
+				info.Beneficiary = vs[(pos + 1):(strings.Count(vs, "") - 1)]
+			} else {
+				info.AgentVersion = vs
+			}
 		}
 	}
 
@@ -188,7 +198,15 @@ func printSelf(node *core.IpfsNode) (interface{}, error) {
 			info.Addresses = append(info.Addresses, s)
 		}
 	}
-	info.ProtocolVersion = identify.LibP2PVersion
-	info.AgentVersion = identify.ClientVersion
+	// info.ProtocolVersion = identify.LibP2PVersion
+	// info.AgentVersion = identify.ClientVersion
+	info.ProtocolVersion = core.LibP2PVersion
+	if c := strings.Count(identify.ClientVersion, "/"); c == 3 {
+		pos := strings.LastIndex(identify.ClientVersion, "/")
+		info.AgentVersion = identify.ClientVersion[0:pos]
+	} else {
+		info.AgentVersion = identify.ClientVersion
+	}
+	info.Beneficiary = node.Beneficiary
 	return info, nil
 }

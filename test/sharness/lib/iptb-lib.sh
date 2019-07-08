@@ -5,16 +5,16 @@
 
 export IPTB_ROOT="$(pwd)/.iptb"
 
-ipfsi() {
+ipwsi() {
   dir="$1"
   shift
-  IPFS_PATH="$IPTB_ROOT/testbeds/default/$dir" ipfs "$@"
+  IPWS_PATH="$IPTB_ROOT/testbeds/default/$dir" ipws "$@"
 }
 
 check_has_connection() {
   node="$1"
-  ipfsi "$node" swarm peers >"swarm_peers_$node" &&
-  grep "ipfs" "swarm_peers_$node" >/dev/null
+  ipwsi "$node" swarm peers >"swarm_peers_$node" &&
+  grep "ipws" "swarm_peers_$node" >/dev/null
 }
 
 iptb() {
@@ -58,7 +58,7 @@ startup_cluster() {
 }
 
 iptb_wait_stop() {
-    while ! iptb run -- sh -c '! { test -e "$IPFS_PATH/repo.lock" && fuser -f "$IPFS_PATH/repo.lock" >/dev/null; }'; do
+    while ! iptb run -- sh -c '! { test -e "$IPWS_PATH/repo.lock" && fuser -f "$IPWS_PATH/repo.lock" >/dev/null; }'; do
         go-sleep 10ms
     done
 }

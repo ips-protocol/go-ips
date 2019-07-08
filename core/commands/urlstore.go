@@ -26,15 +26,15 @@ var urlAdd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Add URL via urlstore.",
 		LongDescription: `
-DEPRECATED: Use 'ipfs add --nocopy --cid-version=1 URL'.
+DEPRECATED: Use 'ipws add --nocopy --cid-version=1 URL'.
 
-Add URLs to ipfs without storing the data locally.
+Add URLs to ipws without storing the data locally.
 
 The URL provided must be stable and ideally on a web server under your
 control.
 
 The file is added using raw-leaves but otherwise using the default
-settings for 'ipfs add'.
+settings for 'ipws add'.
 `,
 	},
 	Options: []cmds.Option{
@@ -42,12 +42,12 @@ settings for 'ipfs add'.
 		cmds.BoolOption(pinOptionName, "Pin this object when adding.").WithDefault(true),
 	},
 	Arguments: []cmds.Argument{
-		cmds.StringArg("url", true, false, "URL to add to IPFS"),
+		cmds.StringArg("url", true, false, "URL to add to IPWS"),
 	},
 	Type: &BlockStat{},
 
 	Run: func(req *cmds.Request, res cmds.ResponseEmitter, env cmds.Environment) error {
-		log.Error("The 'ipfs urlstore' command is deprecated, please use 'ipfs add --nocopy --cid-version=1")
+		log.Error("The 'ipws urlstore' command is deprecated, please use 'ipws add --nocopy --cid-version=1")
 
 		urlString := req.Arguments[0]
 		if !filestore.IsURL(req.Arguments[0]) {

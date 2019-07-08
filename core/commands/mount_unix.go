@@ -20,49 +20,49 @@ const (
 
 var MountCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Mounts IPFS to the filesystem (read-only).",
+		Tagline: "Mounts IPWS to the filesystem (read-only).",
 		ShortDescription: `
-Mount IPFS at a read-only mountpoint on the OS (default: /ipfs and /ipns).
-All IPFS objects will be accessible under that directory. Note that the
+Mount IPWS at a read-only mountpoint on the OS (default: /ipfs and /ipns).
+All IPWS objects will be accessible under that directory. Note that the
 root will not be listable, as it is virtual. Access known paths directly.
 
-You may have to create /ipfs and /ipns before using 'ipfs mount':
+You may have to create /ipfs and /ipns before using 'ipws mount':
 
 > sudo mkdir /ipfs /ipns
 > sudo chown $(whoami) /ipfs /ipns
-> ipfs daemon &
-> ipfs mount
+> ipws daemon &
+> ipws mount
 `,
 		LongDescription: `
-Mount IPFS at a read-only mountpoint on the OS. The default, /ipfs and /ipns,
+Mount IPWS at a read-only mountpoint on the OS. The default, /ipfs and /ipns,
 are set in the configuration file, but can be overriden by the options.
-All IPFS objects will be accessible under this directory. Note that the
+All IPWS objects will be accessible under this directory. Note that the
 root will not be listable, as it is virtual. Access known paths directly.
 
-You may have to create /ipfs and /ipns before using 'ipfs mount':
+You may have to create /ipfs and /ipns before using 'ipws mount':
 
 > sudo mkdir /ipfs /ipns
 > sudo chown $(whoami) /ipfs /ipns
-> ipfs daemon &
-> ipfs mount
+> ipws daemon &
+> ipws mount
 
 Example:
 
 # setup
 > mkdir foo
 > echo "baz" > foo/bar
-> ipfs add -r foo
+> ipws add -r foo
 added QmWLdkp93sNxGRjnFHPaYg8tCQ35NBY3XPn6KiETd3Z4WR foo/bar
 added QmSh5e7S6fdcu75LAbXNZAFY2nGyZUJXyLCJDvn2zRkWyC foo
-> ipfs ls QmSh5e7S6fdcu75LAbXNZAFY2nGyZUJXyLCJDvn2zRkWyC
+> ipws ls QmSh5e7S6fdcu75LAbXNZAFY2nGyZUJXyLCJDvn2zRkWyC
 QmWLdkp93sNxGRjnFHPaYg8tCQ35NBY3XPn6KiETd3Z4WR 12 bar
-> ipfs cat QmWLdkp93sNxGRjnFHPaYg8tCQ35NBY3XPn6KiETd3Z4WR
+> ipws cat QmWLdkp93sNxGRjnFHPaYg8tCQ35NBY3XPn6KiETd3Z4WR
 baz
 
 # mount
-> ipfs daemon &
-> ipfs mount
-IPFS mounted at: /ipfs
+> ipws daemon &
+> ipws mount
+IPWS mounted at: /ipfs
 IPNS mounted at: /ipns
 > cd /ipfs/QmSh5e7S6fdcu75LAbXNZAFY2nGyZUJXyLCJDvn2zRkWyC
 > ls
@@ -76,7 +76,7 @@ baz
 `,
 	},
 	Options: []cmds.Option{
-		cmds.StringOption(mountIPFSPathOptionName, "f", "The path where IPFS should be mounted."),
+		cmds.StringOption(mountIPFSPathOptionName, "f", "The path where IPWS should be mounted."),
 		cmds.StringOption(mountIPNSPathOptionName, "n", "The path where IPNS should be mounted."),
 	},
 	Run: func(req *cmds.Request, res cmds.ResponseEmitter, env cmds.Environment) error {
@@ -119,7 +119,7 @@ baz
 	Type: config.Mounts{},
 	Encoders: cmds.EncoderMap{
 		cmds.Text: cmds.MakeTypedEncoder(func(req *cmds.Request, w io.Writer, mounts *config.Mounts) error {
-			fmt.Fprintf(w, "IPFS mounted at: %s\n", mounts.IPFS)
+			fmt.Fprintf(w, "IPWS mounted at: %s\n", mounts.IPFS)
 			fmt.Fprintf(w, "IPNS mounted at: %s\n", mounts.IPNS)
 
 			return nil

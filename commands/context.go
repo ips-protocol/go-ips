@@ -61,7 +61,7 @@ func (c *Context) GetNode() (*core.IpfsNode, error) {
 	return c.node, err
 }
 
-// GetAPI returns CoreAPI instance backed by ipfs node.
+// GetAPI returns CoreAPI instance backed by ipws node.
 // It may construct the node with the provided function
 func (c *Context) GetAPI() (coreiface.CoreAPI, error) {
 	if c.api == nil {

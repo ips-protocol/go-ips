@@ -31,21 +31,21 @@ import (
 
 var flog = logging.Logger("cmds/files")
 
-// FilesCmd is the 'ipfs files' command
+// FilesCmd is the 'ipws files' command
 var FilesCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Interact with unixfs files.",
 		ShortDescription: `
-Files is an API for manipulating IPFS objects as if they were a unix
+Files is an API for manipulating IPWS objects as if they were a unix
 filesystem.
 
 NOTE:
-Most of the subcommands of 'ipfs files' accept the '--flush' flag. It defaults
+Most of the subcommands of 'ipws files' accept the '--flush' flag. It defaults
 to true. Use caution when setting this flag to false. It will improve
 performance for large numbers of file operations, but it does so at the cost
 of consistency guarantees. If the daemon is unexpectedly killed before running
-'ipfs files flush' on the files in question, then data may be lost. This also
-applies to running 'ipfs repo gc' concurrently with '--flush=false'
+'ipws files flush' on the files in question, then data may be lost. This also
+applies to running 'ipws repo gc' concurrently with '--flush=false'
 operations.
 `,
 	},
@@ -391,7 +391,7 @@ List directories in the local mutable namespace.
 
 Examples:
 
-    $ ipfs files ls /welcome/docs/
+    $ ipws files ls /welcome/docs/
     about
     contact
     help
@@ -399,7 +399,7 @@ Examples:
     readme
     security-notes
 
-    $ ipfs files ls /myfiles/a/b/c/d
+    $ ipws files ls /myfiles/a/b/c/d
     foo
     bar
 `,
@@ -527,7 +527,7 @@ will read the entire file similar to unix cat.
 
 Examples:
 
-    $ ipfs files read /test/hello
+    $ ipws files read /test/hello
     hello
         `,
 	},
@@ -619,7 +619,7 @@ Move files around. Just like traditional unix mv.
 
 Example:
 
-    $ ipfs files mv /myfs/a/b/c /myfs/foo/newc
+    $ ipws files mv /myfs/a/b/c /myfs/foo/newc
 
 `,
 	},
@@ -685,13 +685,13 @@ of writes to a deeper directory structure.
 
 EXAMPLE:
 
-    echo "hello world" | ipfs files write --create /myfs/a/b/file
-    echo "hello world" | ipfs files write --truncate /myfs/a/b/file
+    echo "hello world" | ipws files write --create /myfs/a/b/file
+    echo "hello world" | ipws files write --truncate /myfs/a/b/file
 
 WARNING:
 
 Usage of the '--flush=false' option does not guarantee data durability until
-the tree has been flushed. This can be accomplished by running 'ipfs files
+the tree has been flushed. This can be accomplished by running 'ipws files
 stat' on the file or any of its ancestors.
 `,
 	},
@@ -811,8 +811,8 @@ NOTE: All paths must be absolute.
 
 Examples:
 
-    $ ipfs files mkdir /test/newdir
-    $ ipfs files mkdir -p /test/does/not/exist/yet
+    $ ipws files mkdir /test/newdir
+    $ ipws files mkdir -p /test/does/not/exist/yet
 `,
 	},
 
@@ -961,12 +961,12 @@ var filesRmCmd = &cmds.Command{
 		ShortDescription: `
 Remove files or directories.
 
-    $ ipfs files rm /foo
-    $ ipfs files ls /bar
+    $ ipws files rm /foo
+    $ ipws files ls /bar
     cat
     dog
     fish
-    $ ipfs files rm -r /bar
+    $ ipws files rm -r /bar
 `,
 	},
 

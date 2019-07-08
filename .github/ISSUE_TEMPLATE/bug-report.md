@@ -10,7 +10,7 @@ labels:
 
 Please check dist.ipfs.io for a newer version of go-ipfs and update if necessary. Report back if the problem persists.
 
-If you can't run `ipfs version --all` or that command fails, include as much information as you can: IPFS version, computer architecture (e.g., Intel x86 64bit), operating system, etc. -->
+If you can't run `ipfs version --all` or that command fails, include as much information as you can: IPWS version, computer architecture (e.g., Intel x86 64bit), operating system, etc. -->
 
 #### Description:
 <!-- This is where you get to tell us what went wrong. When doing so, please make sure to include *all* relevant information.

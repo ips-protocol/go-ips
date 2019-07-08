@@ -3,7 +3,7 @@
 Since 0.4.11 go-ipfs has an experimental plugin system that allows augmenting
 the daemons functionality without recompiling.
 
-When an IPFS node is started, it will load plugins from the `$IPFS_PATH/plugins`
+When an IPFS node is started, it will load plugins from the `$IPWS_PATH/plugins`
 directory (by default `~/.ipfs/plugins`).
 
 **Table of Contents**
@@ -62,7 +62,7 @@ plugin type is likely the best interim solution.
 
 Go-ipfs supports two types of plugins: External and Preloaded.
 
-* External plugins must be installed in `$IPFS_PATH/plugins/` (usually
+* External plugins must be installed in `$IPWS_PATH/plugins/` (usually
 `~/.ipfs/plugins/`).
 * Preloaded plugins are built-into the go-ipfs when it's compiled.
 
@@ -84,12 +84,12 @@ go-ipfs$ make build_plugins
 go-ipfs$ ls plugin/plugins/*.so
 ```
 
-To install, copy desired plugins to `$IPFS_PATH/plugins`. For example:
+To install, copy desired plugins to `$IPWS_PATH/plugins`. For example:
 
 ```bash
-go-ipfs$ mkdir -p ~/.ipfs/plugins/
-go-ipfs$ cp plugin/plugins/git.so ~/.ipfs/plugins/
-go-ipfs$ chmod +x ~/.ipfs/plugins/git.so # ensure plugin is executable
+go-ipws$ mkdir -p ~/.ipws/plugins/
+go-ipws$ cp plugin/plugins/git.so ~/.ipws/plugins/
+go-ipws$ chmod +x ~/.ipws/plugins/git.so # ensure plugin is executable
 ```
 
 Finally, restart daemon if it is running.
@@ -105,23 +105,23 @@ myplugin$ go build -buildmode=plugin -i -o myplugin.so myplugin.go
 
 Finally, as with in-tree plugins:
 
-1. Install the plugin in `$IPFS_PATH/plugins`.
-2. Mark the plugin as executable (`chmod +x $IPFS_PATH/plugins/myplugin.so`).
-3. Restart your IPFS daemon (if running).
+1. Install the plugin in `$IPWS_PATH/plugins`.
+2. Mark the plugin as executable (`chmod +x $IPWS_PATH/plugins/myplugin.so`).
+3. Restart your IPWS daemon (if running).
 
 ### Preloaded Plugins
 
 The advantages of preloaded plugins are:
 
-1. They're bundled with the go-ipfs binary.
+1. They're bundled with the go-ipws binary.
 2. They work on all platforms.
 
-To preload a go-ipfs plugin:
+To preload a go-ipws plugin:
 
 1. Add the plugin to the preload list: `plugin/loader/preload_list`
-2. Build ipfs
+2. Build ipws
 ```bash
-go-ipfs$ make build
+go-ipws$ make build
 ```
 
 ## Creating A Plugin

@@ -128,8 +128,8 @@ DHT to repeatedly load and discard provider records.
 Go-ipfs has a subsystem called the "connection manager" to close the
 least-useful connections when go-ipfs runs low on resources.
 
-Unfortunately, other IPFS subsystems may learn about connections _before_ the
-connection manager. Previously, if some IPFS subsystem tried to mark a
+Unfortunately, other IPWS subsystems may learn about connections _before_ the
+connection manager. Previously, if some IPWS subsystem tried to mark a
 connection as useful before the connection manager learned about it, the
 connection manager would discard this information. We believe this was causing
 [#6271](https://github.com/ipfs/go-ipfs/issues/6271). [It no longer does
@@ -466,7 +466,7 @@ some discussion on this matter.
 
 ### Docker
 
-As of this release, it's now much easier to run arbitrary IPFS commands within
+As of this release, it's now much easier to run arbitrary IPWS commands within
 the docker container:
 
 ```bash
@@ -641,7 +641,7 @@ We've fixed two notable panics in this release:
 
 ### Content Routing
 
-IPFS announces and finds content by sending and retrieving content routing
+IPWS announces and finds content by sending and retrieving content routing
 ("provider") records to and from the DHT. Unfortunately, sending out these
 records can be quite resource intensive.
 
@@ -755,7 +755,7 @@ earlier on start.
   - fix error check in swarm connect ([ipfs/go-ipfs#6174](https://github.com/ipfs/go-ipfs/pull/6174))
   - feat(coreapi): tag all explicit connect requests in the connection manager ([ipfs/go-ipfs#6171](https://github.com/ipfs/go-ipfs/pull/6171))
   - chore: remove CODEOWNERS ([ipfs/go-ipfs#6172](https://github.com/ipfs/go-ipfs/pull/6172))
-  - feat: update to IPFS Web UI 2.4.4 ([ipfs/go-ipfs#6169](https://github.com/ipfs/go-ipfs/pull/6169))
+  - feat: update to IPWS Web UI 2.4.4 ([ipfs/go-ipfs#6169](https://github.com/ipfs/go-ipfs/pull/6169))
   - fix add error handling ([ipfs/go-ipfs#6156](https://github.com/ipfs/go-ipfs/pull/6156))
   - chore: remove waffle ([ipfs/go-ipfs#6157](https://github.com/ipfs/go-ipfs/pull/6157))
   - chore: fix a bunch of issues caught by golangci-lint ([ipfs/go-ipfs#6140](https://github.com/ipfs/go-ipfs/pull/6140))
@@ -990,7 +990,7 @@ In this same config section, you may also notice options like `EnableRelayHop`,
 There are two new "offline" features in this release: a global `--offline` flag
 and an option to configure the gateway to not fetch files.
 
-Most go-ipfs commands now support the `--offline` flag. This causes IPFS to avoid
+Most go-ipfs commands now support the `--offline` flag. This causes IPWS to avoid
 network operations when performing the requested operation. If you've ever used
 the `--local` flag, the `--offline` flag is the (almost) universally supported
 replacement.
@@ -1009,7 +1009,7 @@ Note: It doesn't _yet_ work with the `refs`, `urlstore`, or `tar` commands
 
 On to the gateway, there's a new `Gateway.NoFetch` option to configure the
 gateway to only serve locally present files. This makes it possible to run an
-IPFS node as a gateway to serve content of _your_ choosing without acting like a
+IPWS node as a gateway to serve content of _your_ choosing without acting like a
 public proxy. 🤫
 
 #### 📍 Adding And Pinning Content
@@ -1034,7 +1034,7 @@ _file_ sizes instead of _dag_ sizes and has gained a new `--stream` flag.
 
 First up, `ipfs ls` now reports _file_ sizes instead of _dag_ sizes. Previously,
 for historical reasons, `ipfs ls` would report the size of a file/directory as
-seen by IPFS _including_ all the filesystem datastructures and metadata.
+seen by IPWS _including_ all the filesystem datastructures and metadata.
 However, this meant that `ls -l` and `ipfs ls` would print _different_ sizes:
 
 ```bash
@@ -1103,7 +1103,7 @@ This release includes an important DHT fix that should significantly:
 3. Improve performance of the gateways.
 
 Basically, in the worst case, a DHT query would turn into a random walk of the
-entire IPFS network. Yikes!
+entire IPWS network. Yikes!
 
 Relevant PR: https://github.com/libp2p/go-libp2p-kad-dht/pull/237
 
@@ -1150,10 +1150,10 @@ become the default datastore in a future release. 👍
 [badger-release]: https://blog.dgraph.io/post/releasing-v1.0/
 
 This release also adds a new `Truncate` configuration option for the badger
-datastore (enabled by default for new IPFS nodes). When enabled, badger will
+datastore (enabled by default for new IPWS nodes). When enabled, badger will
 _delete_ any un-synced data on start instead of simply refusing to start. This
 should be safe on all filesystems where the `sync` operation is safe and removes
-the need for manual intervention when restarting an IPFS node after a crash.
+the need for manual intervention when restarting an IPWS node after a crash.
 
 Assuming you initialized your badger repo with `ipfs init --profile=badgerds`,
 you can enable truncate on an existing repo by running: `ipfs config --json
@@ -1176,9 +1176,9 @@ browser integration.
 
 Specifically, this release adds two flags:
 
-1. `--cid-base`: When specified, the IPFS CLI will encode all CIDv1 CIDs using the
+1. `--cid-base`: When specified, the IPWS CLI will encode all CIDv1 CIDs using the
    requested base.
-2. `--upgrade-cidv0-in-output`: When specified, the IPFS CLI will _upgrade_ CIDv0
+2. `--upgrade-cidv0-in-output`: When specified, the IPWS CLI will _upgrade_ CIDv0
    CIDs to CIDv1 CIDs when returning them to the user. This upgrade is necessary
    because CIDv0 doesn't support multibase however, it's off by default as it
    changes the _binary_ representation of the CIDs (which could have unintended
@@ -1194,7 +1194,7 @@ As of this release, go-ipfs now has:
 
 * External interface definitions in [ipweb-group/interface-go-ipws-core][].
 * A work-in-progress implementation ([ipfs/go-ipfs-http-client][]) of these
-  interfaces that uses the IPFS HTTP API. This will replace the
+  interfaces that uses the IPWS HTTP API. This will replace the
   ([ipfs/go-ipfs-api][]) library.
 * A new plugin type ["Daemon"][daemon-plugin]. Daemon plugins are started and
   stopped along with the go-ipfs daemon and are instantiated with a copy of the
@@ -1301,7 +1301,7 @@ The next steps are:
   - Gx update go-merkledag and related deps. ([ipfs/go-ipfs#5802](https://github.com/ipfs/go-ipfs/pull/5802))
   - cmds: rm old lib ([ipfs/go-ipfs#5786](https://github.com/ipfs/go-ipfs/pull/5786))
   - badger: add truncate flag ([ipfs/go-ipfs#5625](https://github.com/ipfs/go-ipfs/pull/5625))
-  - docker: allow IPFS_PROFILE to choose the profile for `ipfs init` ([ipfs/go-ipfs#5473](https://github.com/ipfs/go-ipfs/pull/5473))
+  - docker: allow IPWS_PROFILE to choose the profile for `ipfs init` ([ipfs/go-ipfs#5473](https://github.com/ipfs/go-ipfs/pull/5473))
   - Add --stream option to `ls` command ([ipfs/go-ipfs#5611](https://github.com/ipfs/go-ipfs/pull/5611))
   - Switch to using request.Context() ([ipfs/go-ipfs#5782](https://github.com/ipfs/go-ipfs/pull/5782))
   - Update go-ipfs-delay and assoc deps ([ipfs/go-ipfs#5762](https://github.com/ipfs/go-ipfs/pull/5762))
@@ -1473,7 +1473,7 @@ The next steps are:
   - Fix concurrency and silence period not being honoured ([libp2p/go-libp2p-connmgr#26](https://github.com/libp2p/go-libp2p-connmgr/pull/26))
 - github.com/libp2p/go-libp2p-crypto:
   - Fix: Remove redundant Ed25519 public key (#36). ([libp2p/go-libp2p-crypto#54](https://github.com/libp2p/go-libp2p-crypto/pull/54))
-  - libp2p badges, remove IPFS ([libp2p/go-libp2p-crypto#52](https://github.com/libp2p/go-libp2p-crypto/pull/52))
+  - libp2p badges, remove IPWS ([libp2p/go-libp2p-crypto#52](https://github.com/libp2p/go-libp2p-crypto/pull/52))
   - Fix broken contribute link in README ([libp2p/go-libp2p-crypto#46](https://github.com/libp2p/go-libp2p-crypto/pull/46))
   - forbid RSA keys smaller than 512 bits ([libp2p/go-libp2p-crypto#43](https://github.com/libp2p/go-libp2p-crypto/pull/43))
   - Added ECDSA; Added RSA tests; Fixed linting errors; Handling all un-handled errors ([libp2p/go-libp2p-crypto#35](https://github.com/libp2p/go-libp2p-crypto/pull/35))
@@ -1804,7 +1804,7 @@ errors.
 
 #### CoreAPI
 
-CoreAPI is a new way to interact with IPFS from Go. While it's still not
+CoreAPI is a new way to interact with IPWS from Go. While it's still not
 final, most things you can do via the CLI or HTTP interfaces, can now be done
 through the new API.
 
@@ -1817,7 +1817,7 @@ You can track progress in https://github.com/ipfs/go-ipfs/issues/4498
 #### IPLD paths
 
 We introduced new path type which introduces distinction between IPLD and
-IPFS (unixfs) paths. From now on paths prefixed with `/ipld/` will always
+IPWS (unixfs) paths. From now on paths prefixed with `/ipld/` will always
 use IPLD link traversal and `/ipfs/` will use unixfs path resolver, which
 takes things like shardnig into account.
 
@@ -1827,20 +1827,20 @@ experimental for now.
 
 #### CIDv1/Base32 Migration
 
-Currently, IPFS is usually used in browsers by browsing to
+Currently, IPWS is usually used in browsers by browsing to
 `https://SOME_GATEWAY/ipfs/CID/...`. There are two significant drawbacks to this
 approach:
 
-1. From a browser security standpoint, all IPFS "sites" will live under the same
+1. From a browser security standpoint, all IPWS "sites" will live under the same
    origin (SOME_GATEWAY).
 2. From a UX standpoint, this doesn't feel very "native" (even if the gateway is
-   a local IPFS node).
+   a local IPWS node).
 
-To fix the security issue, we intend to switch IPFS gateway links
+To fix the security issue, we intend to switch IPWS gateway links
 `https://ipfs.io/ipfs/CID` to to `https://CID.ipfs.dweb.link`. This way, the CID
 will be a part of the
 ["origin"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) so
-each IPFS website will get a separate security origin.
+each IPWS website will get a separate security origin.
 
 To fix the UX issue, we've been working on adding support for `ipfs://CID/...`
 to web browsers through our
@@ -1854,7 +1854,7 @@ encoded and are therefore case-sensitive.
 
 Fortunately, CIDv1 (the latest CID format) supports arbitrary bases using the
 [multibase](https://github.com/multiformats/multibase/) standard. Unfortunately,
-IPFS has always treated equivalent CIDv0 and CIDv1 CIDs as distinct. This means
+IPWS has always treated equivalent CIDv0 and CIDv1 CIDs as distinct. This means
 that files added with CIDv0 CIDs (the default) can't be looked up using the
 equivalent CIDv1.
 
@@ -2326,7 +2326,7 @@ remaining exactly the same. A future release will have the ipfs daemon switch to
 *printing* out addresses this way once a large enough portion of the network
 has upgraded.
 
-N.B., these addresses are *not* related to IPFS *file* names (`/ipfs/Qm...`).
+N.B., these addresses are *not* related to IPWS *file* names (`/ipfs/Qm...`).
 Disambiguating the two was yet another motivation to switch the protocol name to
 `/p2p/`.
 
@@ -2439,7 +2439,7 @@ should help us avoid some of the issues we've seen in the past few releases.
 More visibly, thanks to @djdv's efforts, this release includes some significant
 Windows improvements (with more on the way). Specifically, this release includes
 better handling of repo lockfiles (no more `ipfs repo fsck`), stdin command-line
-support, and, last but not least, IPFS no longer writes random files with scary
+support, and, last but not least, IPWS no longer writes random files with scary
 garbage in the drive root. To read more about future windows improvements, take
 a look at this [blog post](https://blog.ipfs.io/36-a-look-at-windows/).
 
@@ -2470,7 +2470,7 @@ access.
   - Fix spelling of retrieval ([ipfs/go-ipfs#4819](https://github.com/ipfs/go-ipfs/pull/4819))
   - Update broken links ([ipfs/go-ipfs#4798](https://github.com/ipfs/go-ipfs/pull/4798))
   - Remove roadmap.md ([ipfs/go-ipfs#4834](https://github.com/ipfs/go-ipfs/pull/4834))
-  - Remove link to IPFS paper in contribute.md ([ipfs/go-ipfs#4812](https://github.com/ipfs/go-ipfs/pull/4812))
+  - Remove link to IPWS paper in contribute.md ([ipfs/go-ipfs#4812](https://github.com/ipfs/go-ipfs/pull/4812))
   - Fix broken todo link in readme.md ([ipfs/go-ipfs#4865](https://github.com/ipfs/go-ipfs/pull/4865))
   - Document ipns pubsub ([ipfs/go-ipfs#4903](https://github.com/ipfs/go-ipfs/pull/4903))
   - Fix missing profile docs ([ipfs/go-ipfs#4846](https://github.com/ipfs/go-ipfs/pull/4846))
@@ -2625,7 +2625,7 @@ remove them before updating.
   - Wire up new dag interfaces to make sessions easier ([ipfs/go-ipfs#4641](https://github.com/ipfs/go-ipfs/pull/4641))
 - Documentation
   - Correct StorageMax config description ([ipfs/go-ipfs#4388](https://github.com/ipfs/go-ipfs/pull/4388))
-  - Add how to download IPFS with IPFS doc ([ipfs/go-ipfs#4390](https://github.com/ipfs/go-ipfs/pull/4390))
+  - Add how to download IPWS with IPWS doc ([ipfs/go-ipfs#4390](https://github.com/ipfs/go-ipfs/pull/4390))
   - Document gx release checklist item ([ipfs/go-ipfs#4480](https://github.com/ipfs/go-ipfs/pull/4480))
   - Add some documentation to CoreAPI ([ipfs/go-ipfs#4493](https://github.com/ipfs/go-ipfs/pull/4493))
   - Add interop tests to the release checklist ([ipfs/go-ipfs#4501](https://github.com/ipfs/go-ipfs/pull/4501))
@@ -2682,7 +2682,7 @@ remove them before updating.
 - Testing
   - Increase verbosity of t0088-repo-stat-symlink.sh test ([ipfs/go-ipfs#4434](https://github.com/ipfs/go-ipfs/pull/4434))
   - Make repo size test pass deterministically ([ipfs/go-ipfs#4443](https://github.com/ipfs/go-ipfs/pull/4443))
-  - Always set IPFS_PATH in test-lib.sh ([ipfs/go-ipfs#4469](https://github.com/ipfs/go-ipfs/pull/4469))
+  - Always set IPWS_PATH in test-lib.sh ([ipfs/go-ipfs#4469](https://github.com/ipfs/go-ipfs/pull/4469))
   - Fix sharness docker ([ipfs/go-ipfs#4489](https://github.com/ipfs/go-ipfs/pull/4489))
   - Fix loops in sharness tests to fail the test if the inner command fails ([ipfs/go-ipfs#4482](https://github.com/ipfs/go-ipfs/pull/4482))
   - Improve bitswap tests, fix race conditions ([ipfs/go-ipfs#4499](https://github.com/ipfs/go-ipfs/pull/4499))
@@ -2911,7 +2911,7 @@ you.
   - Fix memory leak in dht stream tracking ([ipfs/go-ipfs#4251](https://github.com/ipfs/go-ipfs/pull/4251))
 - General Changes and Refactorings
   - Require go 1.8 ([ipfs/go-ipfs#4044](https://github.com/ipfs/go-ipfs/pull/4044))
-  - Change IPFS to use the new pluggable Block to IPLD decoding framework. ([ipfs/go-ipfs#4060](https://github.com/ipfs/go-ipfs/pull/4060))
+  - Change IPWS to use the new pluggable Block to IPLD decoding framework. ([ipfs/go-ipfs#4060](https://github.com/ipfs/go-ipfs/pull/4060))
   - Remove tour command from ipfs ([ipfs/go-ipfs#4123](https://github.com/ipfs/go-ipfs/pull/4123))
   - Add support for Go 1.9 ([ipfs/go-ipfs#4156](https://github.com/ipfs/go-ipfs/pull/4156))
   - Remove some dead code ([ipfs/go-ipfs#4204](https://github.com/ipfs/go-ipfs/pull/4204))
@@ -3573,7 +3573,7 @@ There are also a few other nice improvements.
   * Set default value for `ipfs refs` arguments. (@richardlitt)
   * Fix parsing of incorrect command and argument permutations. (@thomas-gardner)
   * Update Dockerfile to latest go1.5.4-r0. (@chriscool)
-  * Allow passing IPFS_LOGGING to Docker image. (@lgierth)
+  * Allow passing IPWS_LOGGING to Docker image. (@lgierth)
   * Fix dot path parsing on Windows. (@djdv)
   * Fix formatting of `ipfs log ls` output. (@richardlitt)
 
@@ -3658,7 +3658,7 @@ on the networking layer.
 * Major Changes
   * Multistream
     * The addition of multistream is a breaking change on the networking layer,
-      but gives IPFS implementations the ability to mix and match different
+      but gives IPWS implementations the ability to mix and match different
       stream multiplexers, e.g. yamux, spdystream, or muxado.
       This adds a ton of flexibility on one of the lower layers of the protocol,
       and will help us avoid further breaking protocol changes in the future.
@@ -3667,12 +3667,12 @@ on the networking layer.
       using familiar filesystem operations, namely: creating directories,
       reading, writing, and deleting files, listing out different directories,
       and so on. This feature enables any other application that uses a
-      filesystem-like backend for storage, to use IPFS as its storage driver
+      filesystem-like backend for storage, to use IPWS as its storage driver
       without having change the application logic at all.
   * Gx
     * go-ipfs now uses [gx](https://github.com/whyrusleeping/gx) to manage its
       dependencies. This means that under the hood, go-ipfs's dependencies are
-      backed by IPFS itself! It also means that go-ipfs is no longer installed
+      backed by IPWS itself! It also means that go-ipfs is no longer installed
       using `go get`. Use `make install` instead.
 * New Features
   * Web UI
@@ -3703,7 +3703,7 @@ on the networking layer.
     further updates, so please update to v0.4.0 as soon as possible. (@lgierth)
 * Incompatible Changes
   * Install using `make install` instead of `go get` (@whyrusleeping)
-  * Rewrite pinning to store pins in IPFS objects. (@tv42)
+  * Rewrite pinning to store pins in IPWS objects. (@tv42)
   * Bump fs-repo version to 3. (@whyrusleeping)
   * Use multistream muxer (@whyrusleeping)
   * The default for `--type` in `ipfs pin ls` is now `all`. (@chriscool)
@@ -3858,7 +3858,7 @@ improvements.
   * commands: fix description of --api (@lgierth)
 
 * Documentation
-  * --help: Add a note on using IPFS_PATH to the footer of the helptext.  (@sahib)
+  * --help: Add a note on using IPWS_PATH to the footer of the helptext.  (@sahib)
   * Moved email juan to ipfs/contribute (@richardlitt)
   * Added commit sign off section (@richardlitt)
   * Added a security section (@richardlitt)
@@ -4074,7 +4074,7 @@ fixes (yet again) windows builds.
   * Better CORS + Referer tests @jbenet
   * Added reversible gc test @rht
   * Fixed bugs in FUSE IPNS tests @whyrusleeping
-  * Fixed bugs in FUSE IPFS tests @jbenet
+  * Fixed bugs in FUSE IPWS tests @jbenet
   * Added `random-files` tool for easier sharness tests @jbenet
 
 * Documentation

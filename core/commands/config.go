@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/ipfs/go-ipfs/core/commands/cmdenv"
@@ -17,6 +18,9 @@ import (
 	"github.com/elgris/jsondiff"
 	"github.com/ipfs/go-ipfs-cmds"
 	"github.com/ipweb-group/go-ipws-config"
+
+	"github.com/ipfs/go-ipfs/chain/base64"
+  "github.com/ipfs/go-ipfs/chain/keystore"
 )
 
 // ConfigUpdateOutput is config profile apply command's output
@@ -34,29 +38,30 @@ const (
 	configBoolOptionName   = "bool"
 	configJSONOptionName   = "json"
 	configDryRunOptionName = "dry-run"
+	configPasswordOptionName = "password"
 )
 
 var ConfigCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Get and set ipfs config values.",
+		Tagline: "Get and set ipws config values.",
 		ShortDescription: `
-'ipfs config' controls configuration variables. It works like 'git config'.
-The configuration values are stored in a config file inside your ipfs
+'ipws config' controls configuration variables. It works like 'git config'.
+The configuration values are stored in a config file inside your ipws
 repository.`,
 		LongDescription: `
-'ipfs config' controls configuration variables. It works
+'ipws config' controls configuration variables. It works
 much like 'git config'. The configuration values are stored in a config
-file inside your IPFS repository.
+file inside your IPWS repository.
 
 Examples:
 
 Get the value of the 'Datastore.Path' key:
 
-  $ ipfs config Datastore.Path
+  $ ipws config Datastore.Path
 
 Set the value of the 'Datastore.Path' key:
 
-  $ ipfs config Datastore.Path ~/.ipfs/datastore
+  $ ipws config Datastore.Path ~/.ipws/datastore
 `,
 	},
 	Subcommands: map[string]*cmds.Command{
@@ -72,6 +77,7 @@ Set the value of the 'Datastore.Path' key:
 	Options: []cmds.Option{
 		cmds.BoolOption(configBoolOptionName, "Set a boolean value."),
 		cmds.BoolOption(configJSONOptionName, "Parse stringified JSON."),
+		cmds.StringOption(configPasswordOptionName, "Set a password of the keystore."),
 	},
 	Run: func(req *cmds.Request, res cmds.ResponseEmitter, env cmds.Environment) error {
 		args := req.Arguments
@@ -79,17 +85,47 @@ Set the value of the 'Datastore.Path' key:
 
 		var output *ConfigField
 
+		cfgRoot, err := cmdenv.GetConfigRoot(env)
+    if err != nil {
+      return err
+    }
+
 		// This is a temporary fix until we move the private key out of the config file
 		switch strings.ToLower(key) {
 		case "identity", "identity.privkey":
 			return errors.New("cannot show or change private key through API")
+		case "chain.keystore":
+      if len(args) == 2 {
+        password, _ := req.Options[configPasswordOptionName].(string)
+        if password == "" {
+          return errors.New("Please set a password.\n       'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+        }
+        ksFile := args[1]
+        fi, err := os.Stat(ksFile)
+        if err != nil {
+          return errors.New("The keystore file does not exist, Please set an existing keystore file.\n       'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+        }
+        if fi.IsDir() {
+          return errors.New("The keystore is a directory, Please set an existing keystore file.\n       'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+        }
+        valid, err := keystore.VerifyKeystore(ksFile, password)
+        if err != nil || valid == false {
+          return errors.New("The keystore file or password is invalid, Please set a right keystore file and password.\n       'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+        }
+      }
+    case "chain.keystorepwd":
+      if len(args) == 1 {
+        return errors.New("cannot show keystore password through API")
+      } else if len(args) == 2 {
+        return errors.New("Cannot change keystore password through API. Please set a keystore file and password.\n       'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+      }
 		default:
 		}
 
-		cfgRoot, err := cmdenv.GetConfigRoot(env)
-		if err != nil {
-			return err
-		}
+		// cfgRoot, err := cmdenv.GetConfigRoot(env)
+		// if err != nil {
+		// 	return err
+		// }
 		r, err := fsrepo.Open(cfgRoot)
 		if err != nil {
 			return err
@@ -97,6 +133,49 @@ Set the value of the 'Datastore.Path' key:
 		defer r.Close()
 		if len(args) == 2 {
 			value := args[1]
+
+			switch strings.ToLower(key) {
+      case "chain.walletprikey":
+        cfg, err := cmdenv.GetConfig(env)
+        password := keystore.GeneratePassword(cfg.Identity.PeerID)
+
+        rootPath, err := config.PathRoot()
+        if err != nil {
+          return err
+        }
+        ksPath := rootPath + "/chain/tmp"
+
+        err = mkdirs(ksPath)
+        if err != nil {
+          return err
+        }
+
+        ksFile, err := keystore.GenerateKeystore(ksPath, value, password)
+        if err != nil {
+          return err
+        }
+        err = copyKeystore(ksFile)
+        if err != nil {
+          return errors.New("The privatekey set failure.\n       'ipws config Chain.WalletPriKey <PrivateKey>'")
+				}
+				
+				rmdir(ksPath)
+
+        key = config.KeystorePwdSelector
+        if err != nil {
+          return err
+        }
+        value = base64.RawStdEncoding.EncodeToString([]byte(password))
+      case "chain.keystore":
+        err := copyKeystore(value)
+        if err != nil {
+          return errors.New("The keystore file copy failure.\n       'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
+        }
+        key = config.KeystorePwdSelector
+        password, _ := req.Options[configPasswordOptionName].(string)
+        value = base64.RawStdEncoding.EncodeToString([]byte(password))
+      default:
+      }
 
 			if parseJSON, _ := req.Options[configJSONOptionName].(bool); parseJSON {
 				var jsonVal interface{}
@@ -175,6 +254,8 @@ NOTE: For security reasons, this command will omit your private key. If you woul
 			return err
 		}
 
+		scrubValue(cfg, []string{config.ChainTag, config.KeystorePwdTag})
+
 		return cmds.EmitOnce(res, &cfg)
 	},
 	Encoders: cmds.EncoderMap{
@@ -235,7 +316,7 @@ var configEditCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Open the config file for editing in $EDITOR.",
 		ShortDescription: `
-To use 'ipfs config edit', you must have the $EDITOR environment
+To use 'ipws config edit', you must have the $EDITOR environment
 variable set to your preferred text editor.
 `,
 	},
@@ -482,4 +563,60 @@ func replaceConfig(r repo.Repo, file io.Reader) error {
 	cfg.Identity.PrivKey = pkstr
 
 	return r.SetConfig(&cfg)
+}
+
+func mkdirs(fullpath string) error {
+  if _, err := os.Stat(fullpath); os.IsNotExist(err) {
+    err = os.MkdirAll(fullpath, 0755)
+    if err != nil {
+      return err
+    }
+  }
+  return nil
+}
+
+func rmdir(fullpath string) error {
+  dir, err := os.Open(fullpath)
+  if err != nil {
+    return err
+  }
+  defer dir.Close()
+  names, err := dir.Readdirnames(-1)
+  if err != nil {
+    return err
+  }
+  for _, name := range names {
+    err = os.RemoveAll(filepath.Join(fullpath, name))
+    if err != nil {
+      return err
+    }
+	}
+	os.RemoveAll(fullpath)
+  return nil
+}
+
+func copyKeystore(ksFile string) error {
+  dstFile := config.KeystoreFile()
+  dstPath := filepath.Dir(dstFile)
+
+  err := mkdirs(dstPath)
+  if err != nil {
+    return err
+  }
+
+  from, err := os.Open(ksFile)
+  if err != nil {
+    return err
+  }
+  defer from.Close()
+  to, err := os.OpenFile(dstFile, os.O_RDWR|os.O_CREATE, 0666)
+  if err != nil {
+    return err
+  }
+  defer to.Close()
+  _, err = io.Copy(to, from)
+  if err != nil {
+    return err
+  }
+  return nil
 }

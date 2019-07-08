@@ -6,7 +6,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # readlink doesn't work on macos
-OUTPUT="${1:-go-ipfs-source.tar.gz}"
+OUTPUT="${1:-go-ipws-source.tar.gz}"
 if ! [[ "$OUTPUT" = /* ]]; then
   OUTPUT="$PWD/$OUTPUT"
 fi

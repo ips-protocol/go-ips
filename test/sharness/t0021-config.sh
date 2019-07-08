@@ -79,9 +79,9 @@ test_profile_apply_dry_run_not_alter() {
   profile=$1
 
   test_expect_success "'ipfs config profile apply ${profile} --dry-run' doesn't alter config" '
-    cat "$IPFS_PATH/config" >expected &&
+    cat "$IPWS_PATH/config" >expected &&
     ipfs config profile apply '${profile}' --dry-run &&
-    cat "$IPFS_PATH/config" >actual &&
+    cat "$IPWS_PATH/config" >actual &&
     test_cmp expected actual
   '
 }
@@ -111,7 +111,7 @@ test_config_cmd() {
   '
 
   test_expect_success "setup for config replace test" '
-    cp "$IPFS_PATH/config" newconfig.json &&
+    cp "$IPWS_PATH/config" newconfig.json &&
     sed -i"~" -e /PrivKey/d -e s/10GB/11GB/ newconfig.json &&
     sed -i"~" -e '"'"'/PeerID/ {'"'"' -e '"'"' s/,$// '"'"' -e '"'"' } '"'"' newconfig.json
   '
@@ -121,7 +121,7 @@ test_config_cmd() {
   '
 
   test_expect_success "check resulting config after 'ipfs config replace'" '
-    sed -e /PrivKey/d "$IPFS_PATH/config" > replconfig.json &&
+    sed -e /PrivKey/d "$IPWS_PATH/config" > replconfig.json &&
     sed -i"~" -e '"'"'/PeerID/ {'"'"' -e '"'"' s/,$// '"'"' -e '"'"' } '"'"' replconfig.json &&
     test_cmp replconfig.json newconfig.json
   '
@@ -147,7 +147,7 @@ test_config_cmd() {
   '
 
   test_expect_success "lower cased PrivKey" '
-    sed -i"~" -e '\''s/PrivKey/privkey/'\'' "$IPFS_PATH/config" &&
+    sed -i"~" -e '\''s/PrivKey/privkey/'\'' "$IPWS_PATH/config" &&
     test_expect_code 1 ipfs config Identity.privkey 2> ident_out
   '
 
@@ -156,7 +156,7 @@ test_config_cmd() {
   '
 
   test_expect_success "fix it back" '
-    sed -i"~" -e '\''s/privkey/PrivKey/'\'' "$IPFS_PATH/config"
+    sed -i"~" -e '\''s/privkey/PrivKey/'\'' "$IPWS_PATH/config"
   '
 
   test_expect_success "'ipfs config show' doesn't include privkey" '
@@ -166,11 +166,11 @@ test_config_cmd() {
 
   test_expect_success "'ipfs config replace' injects privkey back" '
     ipfs config replace show_config &&
-    grep "\"PrivKey\":" "$IPFS_PATH/config" | grep -e ": \".\+\"" >/dev/null
+    grep "\"PrivKey\":" "$IPWS_PATH/config" | grep -e ": \".\+\"" >/dev/null
   '
 
   test_expect_success "'ipfs config replace' with privkey errors out" '
-    cp "$IPFS_PATH/config" real_config &&
+    cp "$IPWS_PATH/config" real_config &&
     test_expect_code 1 ipfs config replace - < real_config 2> replace_out
   '
 
@@ -180,7 +180,7 @@ test_config_cmd() {
   '
 
   test_expect_success "'ipfs config replace' with lower case privkey errors out" '
-    cp "$IPFS_PATH/config" real_config &&
+    cp "$IPWS_PATH/config" real_config &&
     sed -i -e '\''s/PrivKey/privkey/'\'' real_config &&
     test_expect_code 1 ipfs config replace - < real_config 2> replace_out
   '
@@ -196,7 +196,7 @@ test_config_cmd() {
   '
 
   test_expect_success "copy ipfs config" '
-    cp "$IPFS_PATH/config" before_patch
+    cp "$IPWS_PATH/config" before_patch
   '
 
   test_expect_success "'ipfs config profile apply server' works" '
@@ -204,7 +204,7 @@ test_config_cmd() {
   '
 
   test_expect_success "backup was created and looks good" '
-    test_cmp "$(find "$IPFS_PATH" -name "config-*")" before_patch
+    test_cmp "$(find "$IPWS_PATH" -name "config-*")" before_patch
   '
 
   test_expect_success "'ipfs config Swarm.AddrFilters' looks good with server profile" '
@@ -277,7 +277,7 @@ test_config_cmd() {
   # test_profile_apply_revert badgerds
 
   test_expect_success "cleanup config backups" '
-    find "$IPFS_PATH" -name "config-*" -exec rm {} \;
+    find "$IPWS_PATH" -name "config-*" -exec rm {} \;
   '
 }
 

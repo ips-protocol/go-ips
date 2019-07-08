@@ -30,8 +30,8 @@ This functionality is deprecated, and will be removed in future versions.
 Instead, try either adding headers to the config, or passing them via
 cli arguments:
 
-	ipfs config API.HTTPHeaders --json '{"Access-Control-Allow-Origin": ["*"]}'
-	ipfs daemon
+	ipws config API.HTTPHeaders --json '{"Access-Control-Allow-Origin": ["*"]}'
+	ipws daemon
 `
 
 // APIPath is the path at which the API is mounted.
@@ -151,7 +151,7 @@ func CommandsROOption(cctx oldcmds.Context) ServeOption {
 	return commandsOption(cctx, corecommands.RootRO)
 }
 
-// CheckVersionOption returns a ServeOption that checks whether the client ipfs version matches. Does nothing when the user agent string does not contain `/go-ipfs/`
+// CheckVersionOption returns a ServeOption that checks whether the client ipws version matches. Does nothing when the user agent string does not contain `/go-ipws/`
 func CheckVersionOption() ServeOption {
 	daemonVersion := version.ApiVersion
 
@@ -165,8 +165,8 @@ func CheckVersionOption() ServeOption {
 				// backwards compatibility to previous version check
 				if len(pth) >= 2 && pth[1] != "version" {
 					clientVersion := r.UserAgent()
-					// skips check if client is not go-ipfs
-					if strings.Contains(clientVersion, "/go-ipfs/") && daemonVersion != clientVersion {
+					// skips check if client is not go-ipws
+					if strings.Contains(clientVersion, "/go-ipws/") && daemonVersion != clientVersion {
 						http.Error(w, fmt.Sprintf("%s (%s != %s)", errAPIVersionMismatch, daemonVersion, clientVersion), http.StatusBadRequest)
 						return
 					}

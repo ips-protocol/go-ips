@@ -1,7 +1,7 @@
-// Package commands implements the ipfs command interface
+// Package commands implements the ipws command interface
 //
 // Using github.com/ipfs/go-ipfs/commands to define the command line and HTTP
-// APIs.  This is the interface available to folks using IPFS from outside of
+// APIs.  This is the interface available to folks using IPWS from outside of
 // the Go language.
 package commands
 
@@ -67,7 +67,7 @@ func CommandsCmd(root *cmds.Command) *cmds.Command {
 			cmds.BoolOption(flagsOptionName, "f", "Show command flags"),
 		},
 		Run: func(req *cmds.Request, res cmds.ResponseEmitter, env cmds.Environment) error {
-			rootCmd := cmd2outputCmd("ipfs", root)
+			rootCmd := cmd2outputCmd("ipws", root)
 			rootCmd.showOpts, _ = req.Options[flagsOptionName].(bool)
 			return cmds.EmitOnce(res, &rootCmd)
 		},

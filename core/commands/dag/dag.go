@@ -23,10 +23,10 @@ var DagCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Interact with ipld dag objects.",
 		ShortDescription: `
-'ipfs dag' is used for creating and manipulating dag objects.
+'ipws dag' is used for creating and manipulating dag objects.
 
 This subcommand is currently an experimental feature, but it is intended
-to deprecate and replace the existing 'ipfs object' command moving forward.
+to deprecate and replace the existing 'ipws object' command moving forward.
 		`,
 	},
 	Subcommands: map[string]*cmds.Command{
@@ -49,9 +49,9 @@ type ResolveOutput struct {
 
 var DagPutCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Add a dag node to ipfs.",
+		Tagline: "Add a dag node to ipws.",
 		ShortDescription: `
-'ipfs dag put' accepts input from a file or stdin and parses it
+'ipws dag put' accepts input from a file or stdin and parses it
 into an object of the specified format.
 `,
 	},
@@ -144,9 +144,9 @@ into an object of the specified format.
 
 var DagGetCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Get a dag node from ipfs.",
+		Tagline: "Get a dag node from ipws.",
 		ShortDescription: `
-'ipfs dag get' fetches a dag node from ipfs and prints it out in the specified
+'ipws dag get' fetches a dag node from ipws and prints it out in the specified
 format.
 `,
 	},
@@ -187,7 +187,7 @@ var DagResolveCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
 		Tagline: "Resolve ipld block",
 		ShortDescription: `
-'ipfs dag resolve' fetches a dag node from ipfs, prints it's address and remaining path.
+'ipws dag resolve' fetches a dag node from ipws, prints it's address and remaining path.
 `,
 	},
 	Arguments: []cmds.Argument{

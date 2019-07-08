@@ -1,4 +1,4 @@
-# Test framework for go-ipfs
+# Test framework for go-ipws
 #
 # Copyright (c) 2014 Christian Couder
 # MIT Licensed; see the LICENSE file in this repository.
@@ -6,18 +6,18 @@
 # We are using sharness (https://github.com/mlafeldt/sharness)
 # which was extracted from the Git test framework.
 
-# use the ipfs tool to test against
+# use the ipws tool to test against
 
-# add current directory to path, for ipfs tool.
+# add current directory to path, for ipws tool.
 if test "$MAKE_SKIP_PATH" != "1"; then
   BIN=$(cd .. && echo `pwd`/bin)
-  BIN2=$(cd ../.. && echo `pwd`/cmd/ipfs)
+  BIN2=$(cd ../.. && echo `pwd`/cmd/ipws)
   PATH=${BIN2}:${BIN}:${PATH}
 
-  # assert the `ipfs` we're using is the right one.
-  if test `which ipfs` != ${BIN2}/ipfs; then
-    echo >&2 "Cannot find the tests' local ipfs tool."
-    echo >&2 "Please check test and ipfs tool installation."
+  # assert the `ipws` we're using is the right one.
+  if test `which ipws` != ${BIN2}/ipws; then
+    echo >&2 "Cannot find the tests' local ipws tool."
+    echo >&2 "Please check test and ipws tool installation."
     exit 1
   fi
 fi
@@ -39,11 +39,11 @@ SHARNESS_LIB="lib/sharness/sharness.sh"
   exit 1
 }
 
-# Please put go-ipfs specific shell functions below
+# Please put go-ipws specific shell functions below
 
-# Make sure the ipfs path is set, also set in test_init_ipfs but that
+# Make sure the ipws path is set, also set in test_init_ipws but that
 # is not always used.
-export IPFS_PATH="$(pwd)/.ipfs"
+export IPWS_PATH="$(pwd)/.ipws"
 # Ask programs to please not print ANSI codes
 export TERM=dumb
 
@@ -67,7 +67,7 @@ if test "$TEST_VERBOSE" = 1; then
 fi
 
 # source our generic test lib
-. ../../ipfs-test-lib.sh
+. ../../ipws-test-lib.sh
 
 # source iptb lib
 . ../lib/iptb-lib.sh
@@ -117,11 +117,11 @@ test_wait_open_tcp_port_10_sec() {
 
 
 # test_config_set helps us make sure _we really did set_ a config value.
-# it sets it and then tests it. This became elaborate because ipfs config
+# it sets it and then tests it. This became elaborate because ipws config
 # was setting really weird things and am not sure why.
 test_config_set() {
 
-  # grab flags (like --bool in "ipfs config --bool")
+  # grab flags (like --bool in "ipws config --bool")
   test_cfg_flags="" # unset in case.
   test "$#" = 3 && { test_cfg_flags=$1; shift; }
 
@@ -129,41 +129,41 @@ test_config_set() {
   test_cfg_val=$2
 
   # when verbose, tell the user what config values are being set
-  test_cfg_cmd="ipfs config $test_cfg_flags \"$test_cfg_key\" \"$test_cfg_val\""
+  test_cfg_cmd="ipws config $test_cfg_flags \"$test_cfg_key\" \"$test_cfg_val\""
   test "$TEST_VERBOSE" = 1 && echo "$test_cfg_cmd"
 
   # ok try setting the config key/val pair.
-  ipfs config $test_cfg_flags "$test_cfg_key" "$test_cfg_val"
+  ipws config $test_cfg_flags "$test_cfg_key" "$test_cfg_val"
   echo "$test_cfg_val" >cfg_set_expected
-  ipfs config "$test_cfg_key" >cfg_set_actual
+  ipws config "$test_cfg_key" >cfg_set_actual
   test_cmp cfg_set_expected cfg_set_actual
 }
 
-test_init_ipfs() {
+test_init_ipws() {
 
 
   # we set the Addresses.API config variable.
   # the cli client knows to use it, so only need to set.
   # todo: in the future, use env?
 
-  test_expect_success "ipfs init succeeds" '
-    export IPFS_PATH="$(pwd)/.ipfs" &&
-    ipfs init --profile=test -b=1024 > /dev/null
+  test_expect_success "ipws init succeeds" '
+    export IPWS_PATH="$(pwd)/.ipws" &&
+    ipws init --profile=test -b=1024 > /dev/null
   '
 
   test_expect_success "prepare config -- mounting" '
-    mkdir mountdir ipfs ipns &&
-    test_config_set Mounts.IPFS "$(pwd)/ipfs" &&
+    mkdir mountdir ipws ipns &&
+    test_config_set Mounts.IPFS "$(pwd)/ipws" &&
     test_config_set Mounts.IPNS "$(pwd)/ipns" ||
-    test_fsh cat "\"$IPFS_PATH/config\""
+    test_fsh cat "\"$IPWS_PATH/config\""
   '
 
 }
 
-test_config_ipfs_gateway_writable() {
+test_config_ipws_gateway_writable() {
   test_expect_success "prepare config -- gateway writable" '
     test_config_set --bool Gateway.Writable true ||
-    test_fsh cat "\"$IPFS_PATH/config\""
+    test_fsh cat "\"$IPWS_PATH/config\""
   '
 }
 
@@ -189,7 +189,7 @@ test_set_address_vars() {
   daemon_output="$1"
 
   test_expect_success "set up address variables" '
-    API_MADDR=$(cat "$IPFS_PATH/api") &&
+    API_MADDR=$(cat "$IPWS_PATH/api") &&
     API_ADDR=$(convert_tcp_maddr $API_MADDR) &&
     API_PORT=$(port_from_maddr $API_MADDR) &&
 
@@ -198,9 +198,9 @@ test_set_address_vars() {
     GWAY_PORT=$(port_from_maddr $GWAY_MADDR)
   '
 
-  if ipfs swarm addrs local >/dev/null 2>&1; then
+  if ipws swarm addrs local >/dev/null 2>&1; then
     test_expect_success "get swarm addresses" '
-      ipfs swarm addrs local > addrs_out
+      ipws swarm addrs local > addrs_out
     '
 
     test_expect_success "set swarm address vars" '
@@ -210,26 +210,26 @@ test_set_address_vars() {
   fi
 }
 
-test_launch_ipfs_daemon() {
+test_launch_ipws_daemon() {
 
   args="$@"
 
   test "$TEST_ULIMIT_PRESET" != 1 && ulimit -n 2048
 
-  test_expect_success "'ipfs daemon' succeeds" '
-    ipfs daemon $args >actual_daemon 2>daemon_err &
-    IPFS_PID=$!
+  test_expect_success "'ipws daemon' succeeds" '
+    ipws daemon $args >actual_daemon 2>daemon_err &
+    IPWS_PID=$!
   '
 
   # wait for api file to show up
   test_expect_success "api file shows up" '
-    test_wait_for_file 50 100ms "$IPFS_PATH/api"
+    test_wait_for_file 50 100ms "$IPWS_PATH/api"
   '
 
   test_set_address_vars actual_daemon
 
   # we say the daemon is ready when the API server is ready.
-  test_expect_success "'ipfs daemon' is ready" '
+  test_expect_success "'ipws daemon' is ready" '
     pollEndpoint -ep=/version -host=$API_MADDR -v -tout=1s -tries=60 2>poll_apierr > poll_apiout ||
     test_fsh cat actual_daemon || test_fsh cat daemon_err || test_fsh cat poll_apierr || test_fsh cat poll_apiout
   '
@@ -243,28 +243,28 @@ do_umount() {
   fi
 }
 
-test_mount_ipfs() {
+test_mount_ipws() {
 
   # make sure stuff is unmounted first.
-  test_expect_success FUSE "'ipfs mount' succeeds" '
-    do_umount "$(pwd)/ipfs" || true &&
+  test_expect_success FUSE "'ipws mount' succeeds" '
+    do_umount "$(pwd)/ipws" || true &&
     do_umount "$(pwd)/ipns" || true &&
-    ipfs mount >actual
+    ipws mount >actual
   '
 
-  test_expect_success FUSE "'ipfs mount' output looks good" '
-    echo "IPFS mounted at: $(pwd)/ipfs" >expected &&
+  test_expect_success FUSE "'ipws mount' output looks good" '
+    echo "IPWS mounted at: $(pwd)/ipws" >expected &&
     echo "IPNS mounted at: $(pwd)/ipns" >>expected &&
     test_cmp expected actual
   '
 
 }
 
-test_launch_ipfs_daemon_and_mount() {
+test_launch_ipws_daemon_and_mount() {
 
-  test_init_ipfs
-  test_launch_ipfs_daemon
-  test_mount_ipfs
+  test_init_ipws
+  test_launch_ipws_daemon
+  test_mount_ipws
 
 }
 
@@ -287,14 +287,14 @@ test_kill_repeat_10_sec() {
   return 1
 }
 
-test_kill_ipfs_daemon() {
+test_kill_ipws_daemon() {
 
-  test_expect_success "'ipfs daemon' is still running" '
-    kill -0 $IPFS_PID
+  test_expect_success "'ipws daemon' is still running" '
+    kill -0 $IPWS_PID
   '
 
-  test_expect_success "'ipfs daemon' can be killed" '
-    test_kill_repeat_10_sec $IPFS_PID
+  test_expect_success "'ipws daemon' can be killed" '
+    test_kill_repeat_10_sec $IPWS_PID
   '
 }
 

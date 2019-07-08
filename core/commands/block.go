@@ -26,9 +26,9 @@ func (bs BlockStat) String() string {
 
 var BlockCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Interact with raw IPFS blocks.",
+		Tagline: "Interact with raw IPWS blocks.",
 		ShortDescription: `
-'ipfs block' is a plumbing command used to manipulate raw IPFS blocks.
+'ipws block' is a plumbing command used to manipulate raw IPWS blocks.
 Reads from stdin or writes to stdout, and <key> is a base58 encoded
 multihash.
 `,
@@ -44,10 +44,10 @@ multihash.
 
 var blockStatCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Print information of a raw IPFS block.",
+		Tagline: "Print information of a raw IPWS block.",
 		ShortDescription: `
-'ipfs block stat' is a plumbing command for retrieving information
-on raw IPFS blocks. It outputs the following to stdout:
+'ipws block stat' is a plumbing command for retrieving information
+on raw IPWS blocks. It outputs the following to stdout:
 
 	Key  - the base58 encoded multihash
 	Size - the size of the block in bytes
@@ -85,9 +85,9 @@ on raw IPFS blocks. It outputs the following to stdout:
 
 var blockGetCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Get a raw IPFS block.",
+		Tagline: "Get a raw IPWS block.",
 		ShortDescription: `
-'ipfs block get' is a plumbing command for retrieving raw IPFS blocks.
+'ipws block get' is a plumbing command for retrieving raw IPWS blocks.
 It outputs to stdout, and <key> is a base58 encoded multihash.
 `,
 	},
@@ -118,9 +118,9 @@ const (
 
 var blockPutCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Store input as an IPFS block.",
+		Tagline: "Store input as an IPWS block.",
 		ShortDescription: `
-'ipfs block put' is a plumbing command for storing raw IPFS blocks.
+'ipws block put' is a plumbing command for storing raw IPWS blocks.
 It reads from stdin, and <key> is a base58 encoded multihash.
 
 By default CIDv0 is going to be generated. Setting 'mhtype' to anything other
@@ -129,7 +129,7 @@ than 'sha2-256' or format to anything other than 'v0' will result in CIDv1.
 	},
 
 	Arguments: []cmds.Argument{
-		cmds.FileArg("data", true, false, "The data to be stored as an IPFS block.").EnableStdin(),
+		cmds.FileArg("data", true, false, "The data to be stored as an IPWS block.").EnableStdin(),
 	},
 	Options: []cmds.Option{
 		cmds.StringOption(blockFormatOptionName, "f", "cid format for blocks to be created with."),
@@ -199,9 +199,9 @@ const (
 
 var blockRmCmd = &cmds.Command{
 	Helptext: cmds.HelpText{
-		Tagline: "Remove IPFS block(s).",
+		Tagline: "Remove IPWS block(s).",
 		ShortDescription: `
-'ipfs block rm' is a plumbing command for removing raw ipfs blocks.
+'ipws block rm' is a plumbing command for removing raw ipws blocks.
 It takes a list of base58 encoded multihashes to remove.
 `,
 	},

@@ -8,13 +8,13 @@
     <string>io.ipfs.ipfs-daemon</string>
     <key>ProgramArguments</key>
     <array>
-      <string>{{IPFS_BIN}}</string>
+      <string>{{IPWS_BIN}}</string>
       <string>daemon</string>
     </array>
     <key>EnvironmentVariables</key>
     <dict>
-      <key>IPFS_PATH</key>
-      <string>{{IPFS_PATH}}</string>
+      <key>IPWS_PATH</key>
+      <string>{{IPWS_PATH}}</string>
     </dict>
     <key>RunAtLoad</key>
     <true/>

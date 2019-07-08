@@ -1,6 +1,6 @@
-# Experimental features of go-ipfs
+# Experimental features of go-ipws
 
-This document contains a list of experimental features in go-ipfs.
+This document contains a list of experimental features in go-ipws.
 These features, commands, and APIs aren't mature, and you shouldn't rely on them.
 Once they reach maturity, there's going to be mention in the changelog and
 release posts. If they don't reach maturity, the same applies, and their code is
@@ -8,19 +8,19 @@ removed.
 
 Subscribe to https://github.com/ipfs/go-ipfs/issues/3397 to get updates.
 
-When you add a new experimental feature to go-ipfs, or change an experimental
+When you add a new experimental feature to go-ipws, or change an experimental
 feature, you MUST please make a PR updating this document, and link the PR in
 the above issue.
 
-- [ipfs pubsub](#ipfs-pubsub)
+- [ipws pubsub](#ipws-pubsub)
 - [Client mode DHT routing](#client-mode-dht-routing)
 - [go-multiplex stream muxer](#go-multiplex-stream-muxer)
 - [Raw leaves for unixfs files](#raw-leaves-for-unixfs-files)
-- [ipfs filestore](#ipfs-filestore)
-- [ipfs urlstore](#ipfs-urlstore)
+- [ipws filestore](#ipws-filestore)
+- [ipws urlstore](#ipws-urlstore)
 - [BadgerDB datastore](#badger-datastore)
 - [Private Networks](#private-networks)
-- [ipfs p2p](#ipfs-p2p)
+- [ipws p2p](#ipws-p2p)
 - [p2p http proxy](#p2p-http-proxy)
 - [Circuit Relay](#circuit-relay)
 - [Plugins](#plugins)
@@ -32,7 +32,7 @@ the above issue.
 
 ---
 
-## ipfs pubsub
+## ipws pubsub
 
 ### State
 
@@ -45,30 +45,30 @@ experimental, default-disabled.
 ### How to enable
 
 run your daemon with the `--enable-pubsub-experiment` flag. Then use the
-`ipfs pubsub` commands.
+`ipws pubsub` commands.
 
 ### gossipsub
 
 Gossipsub is a new, experimental routing protocol for pubsub that
 should waste less bandwidth than floodsub, the current pubsub
 protocol. It's backwards compatible with floodsub so enabling this
-feature shouldn't break compatibility with existing IPFS nodes.
+feature shouldn't break compatibility with existing IPWS nodes.
 
 You can enable gossipsub via configuration:
-`ipfs config Pubsub.Router gossipsub`
+`ipws config Pubsub.Router gossipsub`
 
 ### Message Signing
 
-As of 0.4.18, go-ipfs signs all pubsub messages by default. For now, it doesn't
+As of 0.4.18, go-ipws signs all pubsub messages by default. For now, it doesn't
 *reject* unsigned messages but it will in the future.
 
 You can turn off message signing (not recommended unless you're using a private
 network) by running:
-`ipfs config Pubsub.DisableSigning true`
+`ipws config Pubsub.DisableSigning true`
 
 You can turn on strict signature verification (require that all messages be
 signed) by running:
-`ipfs config Pubsub.StrictSignatureVerification true`
+`ipws config Pubsub.StrictSignatureVerification true`
 
 (this last option will be set to true by default and eventually removed entirely)
 
@@ -130,14 +130,14 @@ experimental.
 master, 0.4.5
 
 ### How to enable
-Use `--raw-leaves` flag when calling `ipfs add`.
+Use `--raw-leaves` flag when calling `ipws add`.
 
 ### Road to being a real feature
 - [ ] Needs more people to use and report on how well it works.
 
 ---
 
-## ipfs filestore
+## ipws filestore
 Allows files to be added without duplicating the space they take up on disk.
 
 ### State
@@ -147,15 +147,15 @@ experimental.
 master, 0.4.7
 
 ### How to enable
-Modify your ipfs config:
+Modify your ipws config:
 ```
-ipfs config --json Experimental.FilestoreEnabled true
+ipws config --json Experimental.FilestoreEnabled true
 ```
 
-Then restart your IPFS node to reload your config.
+Then restart your IPWS node to reload your config.
 
-Finally, when adding files with ipfs add, pass the --nocopy flag to use the
-filestore instead of copying the files into your local IPFS repo.
+Finally, when adding files with ipws add, pass the --nocopy flag to use the
+filestore instead of copying the files into your local IPWS repo.
 
 ### Road to being a real feature
 - [ ] Needs more people to use and report on how well it works.
@@ -165,8 +165,8 @@ filestore instead of copying the files into your local IPFS repo.
 
 ---
 
-## ipfs urlstore
-Allows ipfs to retrieve blocks contents via a url instead of storing it in the datastore
+## ipws urlstore
+Allows ipws to retrieve blocks contents via a url instead of storing it in the datastore
 
 ### State
 experimental.
@@ -175,12 +175,12 @@ experimental.
 master, v0.4.17
 
 ### How to enable
-Modify your ipfs config:
+Modify your ipws config:
 ```
-ipfs config --json Experimental.UrlstoreEnabled true
+ipws config --json Experimental.UrlstoreEnabled true
 ```
 
-And then add a file at a specific URL using `ipfs urlstore add <url>`
+And then add a file at a specific URL using `ipws urlstore add <url>`
 
 ### Road to being a real feature
 - [ ] Needs more people to use and report on how well it works.
@@ -193,7 +193,7 @@ And then add a file at a specific URL using `ipfs urlstore add <url>`
 
 ## Private Networks
 
-Allows ipfs to only connect to other peers who have a shared secret key.
+Allows ipws to only connect to other peers who have a shared secret key.
 
 ### State
 Experimental
@@ -202,14 +202,14 @@ Experimental
 master, 0.4.7
 
 ### How to enable
-Generate a pre-shared-key using [ipfs-swarm-key-gen](https://github.com/Kubuxu/go-ipfs-swarm-key-gen)):
+Generate a pre-shared-key using [ipws-swarm-key-gen](https://github.com/Kubuxu/go-ipfs-swarm-key-gen)):
 ```
 go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen
-ipfs-swarm-key-gen > ~/.ipfs/swarm.key
+ipws-swarm-key-gen > ~/.ipws/swarm.key
 ```
 
 To join a given private network, get the key file from someone in the network
-and save it to `~/.ipfs/swarm.key` (If you are using a custom `$IPFS_PATH`, put
+and save it to `~/.ipws/swarm.key` (If you are using a custom `$IPWS_PATH`, put
 it in there instead).
 
 When using this feature, you will not be able to connect to the default bootstrap
@@ -218,17 +218,17 @@ your own bootstrap nodes.
 
 First, to prevent your node from even trying to connect to the default bootstrap nodes, run:
 ```bash
-ipfs bootstrap rm --all
+ipws bootstrap rm --all
 ```
 
 Then add your own bootstrap peers with:
 ```bash
-ipfs bootstrap add <multiaddr>
+ipws bootstrap add <multiaddr>
 ```
 
 For example:
 ```
-ipfs bootstrap add /ip4/104.236.76.40/tcp/4001/ipfs/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64
+ipws bootstrap add /ip4/104.236.76.40/tcp/4001/ipfs/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64
 ```
 
 Bootstrap nodes are no different from all other nodes in the network apart from
@@ -244,7 +244,7 @@ configured, the daemon will fail to start.
 
 ---
 
-## ipfs p2p
+## ipws p2p
 
 Allows tunneling of TCP connections through Libp2p streams. If you've ever used
 port forwarding with SSH (the `-L` option in openssh), this feature is quite
@@ -263,7 +263,7 @@ master, 0.4.10
 The `p2p` command needs to be enabled in config:
 
 ```sh
-> ipfs config --json Experimental.Libp2pStreamMounting true
+> ipws config --json Experimental.Libp2pStreamMounting true
 ```
 
 ### How to use
@@ -287,10 +287,10 @@ port `$APP_PORT`.
 Then, configure the p2p listener by running:
 
 ```sh
-> ipfs p2p listen /x/kickass/1.0 /ip4/127.0.0.1/tcp/$APP_PORT
+> ipws p2p listen /x/kickass/1.0 /ip4/127.0.0.1/tcp/$APP_PORT
 ```
 
-This will configure IPFS to forward all incoming `/x/kickass/1.0` streams to
+This will configure IPWS to forward all incoming `/x/kickass/1.0` streams to
 `127.0.0.1:$APP_PORT` (opening a new connection to `127.0.0.1:$APP_PORT` per
 incoming stream.
 
@@ -301,7 +301,7 @@ connections on `127.0.0.1:SOME_PORT` to the server node listening
 on `/x/kickass/1.0`.
 
 ```sh
-> ipfs p2p forward /x/kickass/1.0 /ip4/127.0.0.1/tcp/$SOME_PORT /ipfs/$SERVER_ID
+> ipws p2p forward /x/kickass/1.0 /ip4/127.0.0.1/tcp/$SOME_PORT /ipfs/$SERVER_ID
 ```
 
 Next, have your application open a connection to `127.0.0.1:$SOME_PORT`. This
@@ -331,18 +331,18 @@ exchange messages between netcat instances.
    default port.
 2. A "client" node.
 
-_you can get `$SERVER_ID` by running `ipfs id -f "<id>\n"`_
+_you can get `$SERVER_ID` by running `ipws id -f "<id>\n"`_
 
 ***First, on the "server" node:***
 
 ```sh
-ipfs p2p listen /x/ssh /ip4/127.0.0.1/tcp/22
+ipws p2p listen /x/ssh /ip4/127.0.0.1/tcp/22
 ```
 
 ***Then, on "client" node:***
 
 ```sh
-ipfs p2p forward /x/ssh /ip4/127.0.0.1/tcp/2222 /ipfs/$SERVER_ID
+ipws p2p forward /x/ssh /ip4/127.0.0.1/tcp/2222 /ipfs/$SERVER_ID
 ```
 
 You should now be able to connect to your ssh server through a libp2p connection
@@ -373,13 +373,13 @@ master, 0.4.19
 The `p2p` command needs to be enabled in config:
 
 ```sh
-> ipfs config --json Experimental.Libp2pStreamMounting true
+> ipws config --json Experimental.Libp2pStreamMounting true
 ```
 
 On the client, the p2p http proxy needs to be enabled in the config:
 
 ```sh
-> ipfs config --json Experimental.P2pHttpProxy true
+> ipws config --json Experimental.P2pHttpProxy true
 ```
 
 ### How to use
@@ -403,10 +403,10 @@ port `$APP_PORT`.
 Then, configure the p2p listener by running:
 
 ```sh
-> ipfs p2p listen --allow-custom-protocol /http /ip4/127.0.0.1/tcp/$APP_PORT
+> ipws p2p listen --allow-custom-protocol /http /ip4/127.0.0.1/tcp/$APP_PORT
 ```
 
-This will configure IPFS to forward all incoming `/http` streams to
+This will configure IPWS to forward all incoming `/http` streams to
 `127.0.0.1:$APP_PORT` (opening a new connection to `127.0.0.1:$APP_PORT` per incoming stream.
 
 ***On the "client" node:***
@@ -417,7 +417,7 @@ the remote machine (which needs to be a http server!) with path `$FORWARDED_PATH
 
 ***On "server" node:***
 ```sh
-> echo -e "HTTP/1.1 200\nContent-length: 11\n\nIPFS rocks!" | nc -l -p $APP_PORT
+> echo -e "HTTP/1.1 200\nContent-length: 11\n\nIPWS rocks!" | nc -l -p $APP_PORT
 ```
 
 ***On "client" node:***
@@ -425,7 +425,7 @@ the remote machine (which needs to be a http server!) with path `$FORWARDED_PATH
 > curl http://localhost:8080/p2p/$SERVER_ID/http/
 ```
 
-You should now see the resulting http response: IPFS rocks!
+You should now see the resulting http response: IPWS rocks!
 
 ### Custom protocol names
 We also support use of protocol names of the form /x/$NAME/http where $NAME doesn't contain any "/"'s
@@ -464,16 +464,16 @@ already online node would have to be restarted.
 In order to connect peers QmA and QmB through a relay node QmRelay:
 
 - Both peers should connect to the relay:
-`ipfs swarm connect /transport/address/ipfs/QmRelay`
+`ipws swarm connect /transport/address/ipfs/QmRelay`
 - Peer QmA can then connect to peer QmB using the relay:
-`ipfs swarm connect /ipfs/QmRelay/p2p-circuit/ipfs/QmB`
+`ipws swarm connect /ipws/QmRelay/p2p-circuit/ipfs/QmB`
 
 Peers can also connect with an unspecific relay address, which will
 try to dial through known relays:
-`ipfs swarm connect /p2p-circuit/ipfs/QmB`
+`ipws swarm connect /p2p-circuit/ipfs/QmB`
 
 Peers can see their (unspecific) relay address in the output of
-`ipfs swarm addrs listen`
+`ipws swarm addrs listen`
 
 ### Road to being a real feature
 
@@ -517,13 +517,13 @@ See [Plugin docs](./plugins.md)
  ### Basic Usage
 
  ```
- $ ipfs init --profile=badgerds
+ $ ipws init --profile=badgerds
  ```
  or install https://github.com/ipfs/ipfs-ds-convert/ and
  ```
- [BACKUP ~/.ipfs]
- $ ipfs config profile apply badgerds
- $ ipfs-ds-convert convert
+ [BACKUP ~/.ipws]
+ $ ipws config profile apply badgerds
+ $ ipws-ds-convert convert
  ```
 
 ###
@@ -547,13 +547,13 @@ size of unixfs directories is limited by the maximum block size
 ### Basic Usage:
 
 ```
-ipfs config --json Experimental.ShardingEnabled true
+ipws config --json Experimental.ShardingEnabled true
 ```
 
 ### Road to being a real feature
 
 - [ ] Make sure that objects that don't have to be sharded aren't
-- [ ] Generalize sharding and define a new layer between IPLD and IPFS
+- [ ] Generalize sharding and define a new layer between IPLD and IPWS
 
 ---
 
@@ -607,10 +607,10 @@ Experiment, disabled by default
 
 ### How to enable
 
-Modify your ipfs config:
+Modify your ipws config:
 
 ```
-ipfs config --json Experimental.QUIC true
+ipws config --json Experimental.QUIC true
 ```
 
 For listening on a QUIC address, add it the swarm addresses, e.g. `/ip4/0.0.0.0/udp/4001/quic`.
@@ -638,15 +638,15 @@ Automatically discovers relays and advertises relay addresses when the node is b
 
 ### How to enable
 
-Modify your ipfs config:
+Modify your ipws config:
 
 ```
-ipfs config --json Swarm.EnableAutoRelay true
+ipws config --json Swarm.EnableAutoRelay true
 ```
 
 Bootstrappers (and other public nodes) need to also enable the AutoNATService:
 ```
-ipfs config --json Swarm.EnableAutoNATService true
+ipws config --json Swarm.EnableAutoNATService true
 ```
 
 ### Road to being a real feature
@@ -658,16 +658,16 @@ ipfs config --json Swarm.EnableAutoNATService true
 
 ### State
 
-Every go-ipfs node (>=0.4.21) accepts secio and TLS 1.3 connections but prefers
+Every go-ipws node (>=0.4.21) accepts secio and TLS 1.3 connections but prefers
 secio over TLS when dialing. To prefer TLS when dialing, you'll have to enable
 this feature.
 
 ### How to enable
 
-Modify your ipfs config:
+Modify your ipws config:
 
 ```
-ipfs config --json Experimental.PreferTLS true
+ipws config --json Experimental.PreferTLS true
 ```
 
 ### Road to being a real feature

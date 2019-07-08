@@ -3,6 +3,7 @@ package coreapi
 import (
 	"context"
 	"sort"
+	"strings"
 	"time"
 
 	iaddr "github.com/ipfs/go-ipfs-addr"
@@ -177,3 +178,18 @@ func (ci *connInfo) Streams() ([]protocol.ID, error) {
 
 	return out, nil
 }
+
+func (ci *connInfo) Beneficiary() (string, error) {
+	v, err := ci.peerstore.Get(ci.peer, "AgentVersion")
+	if err != nil {
+		return "", err
+	}
+	if vs, ok := v.(string); ok {
+		if c := strings.Count(vs, "/"); c == 3 {
+			pos := strings.LastIndex(vs, "/")
+			return vs[(pos + 1):(strings.Count(vs, "") - 1)], nil
+		}
+	}
+	return "", nil
+}
+

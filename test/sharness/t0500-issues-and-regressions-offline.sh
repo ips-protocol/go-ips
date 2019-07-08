@@ -7,9 +7,9 @@ test_description="Tests for various fixed issues and regressions."
 # Tests go here
 
 test_expect_success "ipfs init with occupied input works - #2748" '
-  export IPFS_PATH="ipfs_path"
+  export IPWS_PATH="ipws_path"
   echo "" | go-timeout 10 ipfs init &&
-  rm -rf ipfs_path
+  rm -rf ipws_path
 '
 test_init_ipfs
 

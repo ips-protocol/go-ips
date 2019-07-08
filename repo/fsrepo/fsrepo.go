@@ -33,6 +33,10 @@ import (
 // TODO rename repo lock and hide name
 const LockFile = "repo.lock"
 
+// SwarmKey is the content of swarm.key
+// const SwarmKey = "/key/swarm/psk/1.0.0/\n/base16/\ne7030592a0a1dbb10eb05579b64ed15f0f372b397e91bb3df679ec406727459e" // test net
+const SwarmKey = "/key/swarm/psk/1.0.0/\n/base16/\n41950950510e0829051667939b60a7af4bdd23a1c8c15601971ff14f0988b216" // main net
+
 var log = logging.Logger("fsrepo")
 
 // version number that we are currently expecting to see
@@ -42,15 +46,15 @@ var migrationInstructions = `See https://github.com/ipfs/fs-repo-migrations/blob
 Sorry for the inconvenience. In the future, these will run automatically.`
 
 var programTooLowMessage = `Your programs version (%d) is lower than your repos (%d).
-Please update ipfs to a version that supports the existing repo, or run
+Please update ipws to a version that supports the existing repo, or run
 a migration in reverse.
 
 See https://github.com/ipfs/fs-repo-migrations/blob/master/run.md for details.`
 
 var (
 	ErrNoVersion     = errors.New("no version file found, please run 0-to-1 migration tool.\n" + migrationInstructions)
-	ErrOldRepo       = errors.New("ipfs repo found in old '~/.go-ipfs' location, please run migration tool.\n" + migrationInstructions)
-	ErrNeedMigration = errors.New("ipfs repo needs migration")
+	ErrOldRepo       = errors.New("ipws repo found in old '~/.go-ipws' location, please run migration tool.\n" + migrationInstructions)
+	ErrNeedMigration = errors.New("ipws repo needs migration")
 )
 
 type NoRepoError struct {
@@ -60,7 +64,7 @@ type NoRepoError struct {
 var _ error = NoRepoError{}
 
 func (err NoRepoError) Error() string {
-	return fmt.Sprintf("no IPFS repo found in %s.\nplease run: 'ipfs init'", err.Path)
+	return fmt.Sprintf("no IPWS repo found in %s.\nplease run: 'ipws init'", err.Path)
 }
 
 const apiFile = "api"
@@ -80,16 +84,16 @@ var (
 	// this can be removed. Right now, this makes ConfigCmd.Run
 	// function try to open the repo twice:
 	//
-	//     $ ipfs daemon &
-	//     $ ipfs config foo
+	//     $ ipws daemon &
+	//     $ ipws config foo
 	//
 	// The reason for the above is that in standalone mode without the
-	// daemon, `ipfs config` tries to save work by not building the
+	// daemon, `ipws config` tries to save work by not building the
 	// full IpfsNode, but accessing the Repo directly.
 	onlyOne repo.OnlyOne
 )
 
-// FSRepo represents an IPFS FileSystem Repo. It is safe for use by multiple
+// FSRepo represents an IPWS FileSystem Repo. It is safe for use by multiple
 // callers.
 type FSRepo struct {
 	// has Close been called already
@@ -196,7 +200,7 @@ func newFSRepo(rpath string) (*FSRepo, error) {
 
 func checkInitialized(path string) error {
 	if !isInitializedUnsynced(path) {
-		alt := strings.Replace(path, ".ipfs", ".go-ipfs", 1)
+		alt := strings.Replace(path, ".ipws", ".go-ipws", 1)
 		if isInitializedUnsynced(alt) {
 			return ErrOldRepo
 		}
@@ -271,6 +275,19 @@ func initSpec(path string, conf map[string]interface{}) error {
 	return ioutil.WriteFile(fn, bytes, 0600)
 }
 
+func initSwarmKey(path string) error {
+	swarmkeyFilename, err := config.Path(path, "swarm.key")
+	if err != nil {
+		return err
+	}
+
+	if err := ioutil.WriteFile(swarmkeyFilename, []byte(fmt.Sprintf("%v", SwarmKey)), 0644); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Init initializes a new FSRepo at the given path with the provided config.
 // TODO add support for custom datastores.
 func Init(repoPath string, conf *config.Config) error {
@@ -285,6 +302,10 @@ func Init(repoPath string, conf *config.Config) error {
 	}
 
 	if err := initConfig(repoPath, conf); err != nil {
+		return err
+	}
+
+	if err := initSwarmKey(repoPath); err != nil {
 		return err
 	}
 

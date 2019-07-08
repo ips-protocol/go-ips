@@ -1,4 +1,4 @@
-# go-ipfs
+# go-ipws
 
 ![banner](https://ipfs.io/ipfs/QmVk7srrwahXLNmcDYvyUEJptyoxpndnRa57YJ11L4jV26/ipfs.go.png)
 
@@ -9,14 +9,14 @@
 [![GoDoc](https://godoc.org/github.com/ipfs/go-ipfs?status.svg)](https://godoc.org/github.com/ipfs/go-ipfs)
 [![Build Status](https://travis-ci.com/ipfs/go-ipfs.svg?branch=master)](https://travis-ci.com/ipfs/go-ipfs)
 
-## What is IPFS?
+## What is IPWS?
 
-IPFS is a global, versioned, peer-to-peer filesystem. It combines good ideas from Git, BitTorrent, Kademlia, SFS, and the Web. It is like a single bittorrent swarm, exchanging git objects. IPFS provides an interface as simple as the HTTP web, but with permanence built in. You can also mount the world at /ipfs.
+IPWS is a global, versioned, peer-to-peer filesystem. It combines good ideas from Git, BitTorrent, Kademlia, SFS, and the Web. It is like a single bittorrent swarm, exchanging git objects. IPWS provides an interface as simple as the HTTP web, but with permanence built in. You can also mount the world at /ipfs.
 
 For more info see: https://github.com/ipfs/ipfs.
 
 Please put all issues regarding:
-  - IPFS _design_ in the [ipfs repo issues](https://github.com/ipfs/ipfs/issues).
+  - IPWS _design_ in the [ipfs repo issues](https://github.com/ipfs/ipfs/issues).
   - Go IPFS _implementation_ in [this repo](https://github.com/ipfs/go-ipfs/issues).
 
 ## Table of Contents
@@ -240,9 +240,9 @@ SUBCOMMANDS
   Use 'ipfs <command> --help' to learn more about each command.
 
   ipfs uses a repository in the local file system. By default, the repo is located
-  at ~/.ipfs. To change the repo location, set the $IPFS_PATH environment variable:
+  at ~/.ipfs. To change the repo location, set the $IPWS_PATH environment variable:
 
-    export IPFS_PATH=/path/to/ipfsrepo
+    export IPWS_PATH=/path/to/ipfsrepo
 ```
 
 ## Getting Started
@@ -308,9 +308,9 @@ Stop the running container:
 
     docker stop ipfs_host
 
-When starting a container running ipfs for the first time with an empty data directory, it will call `ipfs init` to initialize configuration files and generate a new keypair. At this time, you can choose which profile to apply using the `IPFS_PROFILE` environment variable:
+When starting a container running ipfs for the first time with an empty data directory, it will call `ipfs init` to initialize configuration files and generate a new keypair. At this time, you can choose which profile to apply using the `IPWS_PROFILE` environment variable:
 
-    docker run -d --name ipfs_host -e IPFS_PROFILE=server -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/go-ipfs:latest
+    docker run -d --name ipfs_host -e IPWS_PROFILE=server -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/go-ipfs:latest
 
 ### Troubleshooting
 

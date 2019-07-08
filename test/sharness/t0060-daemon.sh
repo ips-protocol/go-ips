@@ -12,7 +12,7 @@ test_description="Test daemon command"
 test_init_ipfs
 test_launch_ipfs_daemon
 
-# this errors if we didn't --init $IPFS_PATH correctly
+# this errors if we didn't --init $IPWS_PATH correctly
 test_expect_success "'ipfs config Identity.PeerID' works" '
   PEERID=$(ipfs config Identity.PeerID)
 '
@@ -128,7 +128,7 @@ test_expect_success "'ipfs daemon' can be killed" '
 test_expect_success "'ipfs daemon' should be able to run with a pipe attached to stdin (issue #861)" '
   yes | ipfs daemon >stdin_daemon_out 2>stdin_daemon_err &
   DAEMON_PID=$!
-  test_wait_for_file 20 100ms "$IPFS_PATH/api" &&
+  test_wait_for_file 20 100ms "$IPWS_PATH/api" &&
   test_set_address_vars stdin_daemon_out
 '
 
@@ -140,7 +140,7 @@ test_expect_success "daemon with pipe eventually becomes live" '
 
 test_expect_success "'ipfs daemon' cleans up when it fails to start" '
   test_must_fail ipfs daemon --routing=foobar &&
-  test ! -e "$IPFS_PATH/repo.lock"
+  test ! -e "$IPWS_PATH/repo.lock"
 '
 
 ulimit -S -n 512
