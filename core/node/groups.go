@@ -196,7 +196,7 @@ func Beneficiary(cfg *config.Config) fx.Option {
 	if err != nil {
 		// fmt.Println("the wallet privatekey or keystore not found.\nplease run: 'ipws config Chain.WalletPriKey <PrivateKey>'\nor          'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
 		return fx.Options(
-			fx.Provide(""),
+			fx.Provide(Address("")),
 		)
 	}
 
@@ -204,7 +204,7 @@ func Beneficiary(cfg *config.Config) fx.Option {
 	if err != nil {
 		// fmt.Println("the wallet privatekey or keystore not found.\nplease run: 'ipws config Chain.WalletPriKey <PrivateKey>'\nor          'ipws config Chain.Keystore <keystore file> --password <keystore password>'")
 		return fx.Options(
-			fx.Provide(""),
+			fx.Provide(Address("")),
 		)
 	}
 

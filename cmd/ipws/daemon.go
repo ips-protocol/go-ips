@@ -425,9 +425,11 @@ func daemonFunc(req *cmds.Request, re cmds.ResponseEmitter, env cmds.Environment
 	prometheus.MustRegister(&corehttp.IpfsNodeCollector{Node: node})
 
 	// construct p2p api endpoint
-	err = serveP2PApi(req, cctx)
-	if err != nil {
-		return err
+	if len(node.Beneficiary) > 0 {
+		err = serveP2PApi(req, cctx)
+		if err != nil {
+			return err
+		}
 	}
 
 	sendStartupEMail(cctx)
