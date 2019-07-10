@@ -373,6 +373,8 @@ github.com/ipweb-group/interface-go-ipws-core v0.9.0 h1:cfx2BrjPQ/dpgmjpuQ3MnEcK
 github.com/ipweb-group/interface-go-ipws-core v0.9.0/go.mod h1:hyu++rTTQcO2hioC9vdOHTUjUgX+i1Bh73u5jG3vkYo=
 github.com/ipweb-group/ipw v0.9.0 h1:vwsUUiqCaN2GU20GHzcv9SS1i2iC+BZtSnD+JP0dQ3E=
 github.com/ipweb-group/ipw v0.9.0/go.mod h1:39AcQtI20lYmKJKBHWTFSnzBO6DkV/3Kux3JxWfs8oc=
+github.com/ipweb-group/ipw v1.9.0 h1:+nZaq2T0m0przLeMQxMbAZhJtlChCMzvLirpTjrDOn0=
+github.com/ipweb-group/ipw v1.9.0/go.mod h1:39AcQtI20lYmKJKBHWTFSnzBO6DkV/3Kux3JxWfs8oc=
 github.com/jackpal/gateway v1.0.4 h1:LS5EHkLuQ6jzaHwULi0vL+JO0mU/n4yUtK8oUjHHOlM=
 github.com/jackpal/gateway v1.0.4/go.mod h1:lTpwd4ACLXmpyiCTRtfiNyVnUmqT9RivzCDQetPfnjA=
 github.com/jackpal/gateway v1.0.5 h1:qzXWUJfuMdlLMtt0a3Dgt+xkWQiA5itDEITVJtuSwMc=
