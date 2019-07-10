@@ -138,4 +138,4 @@ require (
 
 go 1.12
 
-replace github.com/ethereum/go-ethereum v1.8.7 => github.com/ipweb-group/ipw v0.9.0
+replace github.com/ethereum/go-ethereum v1.8.7 => github.com/ipweb-group/ipw v1.9.0
