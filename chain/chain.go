@@ -58,7 +58,7 @@ func CommitBlockInfo(cfg *config.Config, fHash string, bIdx uint32, bHash string
 		return err
 	}
 
-	var retry int
+	retry := 0
 	var tx *types.Transaction
 	var e error
 
@@ -97,7 +97,7 @@ func DownloadBlock(cfg *config.Config, fHash string, bIdx uint32, bHash string, 
 		return err
 	}
 
-	var retry int
+	retry := 0
 	var tx *types.Transaction
 	var e error
 
@@ -110,7 +110,7 @@ func DownloadBlock(cfg *config.Config, fHash string, bIdx uint32, bHash string, 
 		auth := newKeyedTransactor(cfg)
 
 		tx, e = storageAccount.DownloadBlock(auth, fileAddress, big.NewInt(int64(bIdx)), []byte(bHash), []byte(cfg.Identity.PeerID), proof)
-		if err == nil {
+		if e == nil {
 			break
 		}
 		retry = retry + 1

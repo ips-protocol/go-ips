@@ -6,6 +6,9 @@ ENV SRC_DIR /go-ipfs
 # Download packages first so they can be cached.
 COPY go.mod go.sum $SRC_DIR/
 RUN cd $SRC_DIR \
+  && git config --global url."https://9470a8d7c1f3262393ba4afdd2ec1a9d9134724b:x-oauth-basic@github.com/ipweb-group/go-ipws-config".insteadOf "https://github.com/ipweb-group/go-ipws-config" \
+  && git config --global url."https://9470a8d7c1f3262393ba4afdd2ec1a9d9134724b:x-oauth-basic@github.com/ipweb-group/interface-go-ipws-core".insteadOf "https://github.com/ipweb-group/interface-go-ipws-core" \
+  && git config --global url."https://9470a8d7c1f3262393ba4afdd2ec1a9d9134724b:x-oauth-basic@github.com/ipweb-group/ipw".insteadOf "https://github.com/ipweb-group/ipw" \
   && go mod download
 
 COPY . $SRC_DIR
