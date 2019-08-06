@@ -791,7 +791,7 @@ func serveP2PApi(req *cmds.Request, cctx *oldcmds.Context) error {
 		return fmt.Errorf("serveP2PApi: ConstructNode() failed: %s", err)
 	}
 
-	_, err = node.P2P.ForwardRemote(node.Context(), proto, target, true)
+	_, err = node.P2P.ForwardRemote(node.Context(), proto, target, false)
 	if err != nil {
 		return err
 	}
