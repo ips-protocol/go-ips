@@ -369,6 +369,8 @@ github.com/ipfs/iptb-plugins v0.0.2 h1:JZp4h/+7f00dY4Epr8gzF+VqKITXmVGsZabvmZp7E
 github.com/ipfs/iptb-plugins v0.0.2/go.mod h1:Vud+X6lHv5QlgVbqCPBHt91I0gPIRgmkD6/tMUsI07U=
 github.com/ipweb-group/go-ipws-config v0.9.0 h1:iUf37h2LRiSi73YZWr9u73RE9m6W2wn+w3zr4Lj8k0o=
 github.com/ipweb-group/go-ipws-config v0.9.0/go.mod h1:+CFSQcvynJSCLX4Kj0JJrUgVZCGXe4707MIeBKj8ICQ=
+github.com/ipweb-group/go-ipws-config v0.9.1 h1:HmeqrPXq0qGaWWhIkUTFDehgu+WuREhjRVGPtBxH6FA=
+github.com/ipweb-group/go-ipws-config v0.9.1/go.mod h1:+CFSQcvynJSCLX4Kj0JJrUgVZCGXe4707MIeBKj8ICQ=
 github.com/ipweb-group/interface-go-ipws-core v0.9.0 h1:cfx2BrjPQ/dpgmjpuQ3MnEcKfNjGYEuGgb3P8PvX1WI=
 github.com/ipweb-group/interface-go-ipws-core v0.9.0/go.mod h1:hyu++rTTQcO2hioC9vdOHTUjUgX+i1Bh73u5jG3vkYo=
 github.com/ipweb-group/ipw v0.9.0 h1:vwsUUiqCaN2GU20GHzcv9SS1i2iC+BZtSnD+JP0dQ3E=

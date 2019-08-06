@@ -624,9 +624,9 @@ func serveHTTPGateway(req *cmds.Request, cctx *oldcmds.Context) (<-chan error, e
 		corehttp.CommandsROOption(cmdctx),
 	}
 
-	if cfg.Experimental.P2pHttpProxy {
-		opts = append(opts, corehttp.ProxyOption())
-	}
+	// if cfg.Experimental.P2pHttpProxy {
+	opts = append(opts, corehttp.ProxyOption())
+	// }
 
 	if len(cfg.Gateway.RootRedirect) > 0 {
 		opts = append(opts, corehttp.RedirectOption("", cfg.Gateway.RootRedirect))
@@ -791,7 +791,7 @@ func serveP2PApi(req *cmds.Request, cctx *oldcmds.Context) error {
 		return fmt.Errorf("serveP2PApi: ConstructNode() failed: %s", err)
 	}
 
-	_, err = node.P2P.ForwardRemote(node.Context(), proto, target, false)
+	_, err = node.P2P.ForwardRemote(node.Context(), proto, target, true)
 	if err != nil {
 		return err
 	}

@@ -61,7 +61,7 @@ require (
 	github.com/ipfs/hang-fds v0.0.1
 	github.com/ipfs/iptb v1.4.0
 	github.com/ipfs/iptb-plugins v0.0.2
-	github.com/ipweb-group/go-ipws-config v0.9.0
+	github.com/ipweb-group/go-ipws-config v0.9.1
 	github.com/ipweb-group/interface-go-ipws-core v0.9.0
 	github.com/jbenet/go-is-domain v1.0.2
 	github.com/jbenet/go-random v0.0.0-20190219211222-123a90aedc0c
