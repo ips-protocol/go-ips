@@ -69,6 +69,7 @@ func CommitBlockInfo(cfg *config.Config, fHash string, bIdx uint32, bHash string
 		e = nil
 
 		auth := newKeyedTransactor(cfg)
+		auth.GasPrice = big.NewInt(1)
 
 		tx, e = storageAccount.CommitBlockInfo(auth, fileAddress, big.NewInt(int64(bIdx)), []byte(bHash), []byte(cfg.Identity.PeerID), proof)
 		if e == nil {
@@ -108,6 +109,7 @@ func DownloadBlock(cfg *config.Config, fHash string, bIdx uint32, bHash string, 
 		e = nil
 
 		auth := newKeyedTransactor(cfg)
+		auth.GasPrice = big.NewInt(1)
 
 		tx, e = storageAccount.DownloadBlock(auth, fileAddress, big.NewInt(int64(bIdx)), []byte(bHash), []byte(cfg.Identity.PeerID), proof)
 		if e == nil {
